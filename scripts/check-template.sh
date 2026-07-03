@@ -15,31 +15,39 @@ fi
 
 FILES=(CLAUDE.md .mcp.json)
 
-# Konkrete Fill-in-Tokens (bewusst NICHT das generische Wort PLACEHOLDER,
-# damit erklaerender Text nicht faelschlich anschlaegt).
-TOKENS=(
-  "<PROJECT_NAME>"
-  "<STACK>"
-  "<DEV_SCHEMA>"
-  "<QUALITY_BAR>"
-  "<INFERENCE_DB>"
-  "<INFERENCE_SCHEMA>"
-  "<LANDING_DB>"
-  "<PROJEKT>"
-  "<One-line description"
+# Konvention: Fill-in-Platzhalter sind <UPPER_SNAKE> in spitzen Klammern
+# (z. B. <PROJECT_NAME>, <DEV_SCHEMA>, <QUALITY_BAR>). Neue Platzhalter dieser
+# Form werden AUTOMATISCH erzwungen - keine Liste pflegen. Ausgenommen ist nur
+# <PLACEHOLDER> selbst (generisches Wort im erklaerenden Text).
+PLACEHOLDER_RE='<[A-Z][A-Z0-9_]+>'
+
+# Bekannte Platzhalter, die der Konvention NICHT folgen (explizit ergaenzen):
+EXTRA=(
   "REPLACE_WITH_YOUR_SNOWFLAKE_MCP_COMMAND"
+  "<One-line description"
 )
 
 found=0
 for f in "${FILES[@]}"; do
   [ -f "$f" ] || continue
-  for t in "${TOKENS[@]}"; do
-    if grep -Fq "$t" "$f"; then
-      # -n fuer Zeilennummern, -F fuer festen String (spitze Klammern nicht als Regex)
-      grep -Fn "$t" "$f" | sed "s|^|  ${f}:|"
-      found=1
+
+  # Konventions-Tokens einsammeln, generisches <PLACEHOLDER> herausfiltern.
+  tokens="$(grep -oE "$PLACEHOLDER_RE" "$f" | grep -vx '<PLACEHOLDER>' || true)"
+
+  # Nicht-konforme, bekannte Platzhalter ergaenzen.
+  for e in "${EXTRA[@]}"; do
+    if grep -Fq "$e" "$f"; then
+      tokens="${tokens}"$'\n'"${e}"
     fi
   done
+
+  tokens="$(printf '%s\n' "$tokens" | sed '/^$/d' | sort -u)"
+  [ -z "$tokens" ] && continue
+
+  found=1
+  while IFS= read -r t; do
+    grep -Fn "$t" "$f" | sed "s|^|  ${f}:|"
+  done <<< "$tokens"
 done
 
 if [ "$found" -ne 0 ]; then
