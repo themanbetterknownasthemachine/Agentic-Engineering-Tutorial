@@ -28,6 +28,7 @@ und entfernt den `.template`-Marker. Manuell geht es über die Checkliste:
 
 - [ ] **Domäne wählen**: `bash scripts/init-domain.sh <ml|de|dwh>` entfernt nicht
       benötigte Domänen-Ordner (siehe `docs/domain-setup/`)
+- [ ] **ML-Projekte**: `uv sync --group ml` (optionaler ML-Stack; Basis bleibt `uv sync`)
 - [ ] **`.template` entfernen** (macht `init-project.sh` automatisch): erst ohne diesen Marker
       erzwingt `check-template.sh` gefüllte Platzhalter
 - [ ] **CLAUDE.md**: alle `<PLACEHOLDER>` füllen — `<PROJECT_NAME>`, Beschreibung, `<STACK>`,

@@ -13,6 +13,41 @@ dependencies = [
 
 [dependency-groups]
 dev = ["ruff>=0.4", "mypy>=1.10", "pytest>=8.0"]
+# Optionaler ML-Stack aus dem BIDA-ML-Starter. Nur fuer ML-Projekte:
+# `uv sync --group ml`. pandas/numpy/pyarrow/scikit-learn/statsmodels stehen
+# bereits in den Basis-Dependencies und werden hier nicht gedoppelt. Die
+# Snowflake-Container-Runtime-Variante (requirements-snowflake.txt) bleibt
+# exklusiv im BIDA-ML-Starter.
+ml = [
+  # Data / Snowflake
+  "snowflake-snowpark-python>=1.20.0",
+  "snowflake-connector-python[pandas]>=3.12",
+  "snowflake-sqlalchemy>=1.6",
+  "openpyxl>=3.1.0",
+  # ML Core
+  "lightgbm>=4.0.0",
+  "xgboost>=2.0.0",
+  "optuna>=3.6.0",
+  "imbalanced-learn>=0.12.0",
+  # Time Series (Nixtla)
+  "neuralforecast>=1.7.0",
+  "statsforecast>=2.0.0",
+  "mlforecast>=0.13.0",
+  # Explainability
+  "shap>=0.45.0",
+  # Visualization
+  "matplotlib>=3.8.0",
+  "seaborn>=0.13.0",
+  # Utilities
+  "python-dotenv>=1.0.0",
+  "pyyaml>=6.0.0",
+  "tqdm>=4.66.0",
+  "loguru>=0.7.0",
+  "scipy>=1.14.0",
+  "holidays>=0.50",
+  "joblib>=1.4.0",
+  "cryptography>=42.0.0",
+]
 
 [tool.ruff]
 line-length = 100
