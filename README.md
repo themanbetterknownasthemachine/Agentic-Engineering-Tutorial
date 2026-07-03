@@ -4,6 +4,14 @@ Ein push-fertiges Skelett, um ein neues Projekt so aufzusetzen, dass du Claude C
 Engineering) optimal nutzen kannst. Es folgt einer sauberen, konventionellen Softwarestruktur
 und ergänzt sie um den `.claude`-Ordner mit Kontext, Regeln, Skills, Subagents und Leitplanken.
 
+Dieses Repo ist das Starter-Template für jedes Projekt (Claude Code).
+Der [BIDA-ML-Starter](https://github.com/themanbetterknownasthemachine/BIDA-ML-Starter)
+ist die ML-Methoden-Bibliothek für alle ML-Aufgaben (Forecasting, Klassifikation,
+Regression) — datenquellenunabhängig, mit optionaler Snowflake-Anbindung und als
+Variante für Snowflake Container Runtime / Cortex Code. Seine Methoden-Skills und
+Anleitungs-Notebooks werden bei ML-Projektstart paarweise ins Projekt kopiert
+(automatisch via `scripts/new-ml-project.sh`, manuell: `docs/domain-setup/ml.md`).
+
 ## Die Grundidee
 
 > Erst sagst **du**, was gebaut werden soll (Spec) und woran man Erfolg misst (Verifier) –
