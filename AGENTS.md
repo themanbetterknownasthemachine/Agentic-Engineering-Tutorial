@@ -14,14 +14,22 @@ Spec and verifier first, code second. Do not start coding without both.
   repeat until the verifier passes.
 
 ## Technology
-- Snowflake (Data Vault 2.0), dbt-core + dbt-snowflake, CLI: `dbtf`
+> The stack below is the **default** (Snowflake + dbt). Trim or swap it per project
+> — e.g. an Oracle project replaces the Snowflake/dbt lines and drops `models/`.
+> Keep only what the project actually uses; see `docs/domain-setup/`.
+
+- Data platform: Snowflake (Data Vault 2.0), dbt-core + dbt-snowflake, CLI: `dbtf`
+  — **or** Oracle (see `.claude/rules/oracle.md`; no dbt/DIM_DATE there).
 - Python 3.12 (uv), pandas, scikit-learn, statsmodels, NeuralForecast, LightGBM
 - Apache Airflow (orchestration), Power BI (consumption)
-- Auth: Snowflake key-pair (`snowflake_jwt`). Dev schema: `DBT_BUT`.
+- Auth (Snowflake): key-pair (`snowflake_jwt`). Dev schema: `DBT_BUT`.
 
 ## Architecture
+> Platform-specific; applies to the default Snowflake stack. Adjust for the project's platform.
+
 - Transformations live in `models/` (dbt). Never write manual DDL in Snowsight.
 - Time intelligence always via `DIM_DATE`; `AT = 1` = Pistor working-day logic.
+  (Snowflake-specific — does not apply to Oracle projects.)
 - ML inference views: `BUT_LANDING.ML_INFERENCE.V_FORECAST_*`
 - Optional domain folders (`powerbi/`, `oracle/`, `dags/`, `notebooks/`):
   see `docs/domain-setup/`.
