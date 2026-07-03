@@ -12,16 +12,17 @@ Beispiel:
 
 import argparse
 import sys
+from typing import NoReturn
 
 import numpy as np
 import pandas as pd
 
-THRESHOLD_MAPE = 8.0    # Prozent, auf Zeilen mit y_true != 0
+THRESHOLD_MAPE = 8.0  # Prozent, auf Zeilen mit y_true != 0
 MAX_ABS_BIAS_PCT = 3.0  # erlaubter mittlerer Bias in Prozent des Mittelwerts
 REQUIRED_COLUMNS = ("y_true", "y_pred")
 
 
-def fail_setup(message: str) -> None:
+def fail_setup(message: str) -> NoReturn:
     """Setup-Fehler klar benennen und mit Exit 2 abbrechen (FAIL, aber kein Metrik-FAIL)."""
     print(f"SETUP-FEHLER: {message}", file=sys.stderr)
     sys.exit(2)
@@ -44,8 +45,9 @@ def mape_excluding_zeros(y_true: pd.Series, y_pred: pd.Series) -> tuple[float, i
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--holdout", default="holdout.parquet",
-                    help="Parquet mit Spalten y_true, y_pred")
+    ap.add_argument(
+        "--holdout", default="holdout.parquet", help="Parquet mit Spalten y_true, y_pred"
+    )
     args = ap.parse_args()
 
     try:
@@ -68,17 +70,17 @@ def main() -> None:
     bias_pct = bias / mean_true * 100 if mean_true != 0 else float("inf")
     n_negative = int((df["y_pred"] < 0).sum())
 
-    print(f"MAPE      = {m:6.2f} %   (Schwelle < {THRESHOLD_MAPE} %, "
-          f"{n_excluded} Zeilen mit y_true == 0 ausgeschlossen)")
-    print(f"Bias      = {bias:+10.0f}   ({bias_pct:+.1f} % vom Mittelwert, "
-          f"erlaubt +/- {MAX_ABS_BIAS_PCT} %)")
+    print(
+        f"MAPE      = {m:6.2f} %   (Schwelle < {THRESHOLD_MAPE} %, "
+        f"{n_excluded} Zeilen mit y_true == 0 ausgeschlossen)"
+    )
+    print(
+        f"Bias      = {bias:+10.0f}   ({bias_pct:+.1f} % vom Mittelwert, "
+        f"erlaubt +/- {MAX_ABS_BIAS_PCT} %)"
+    )
     print(f"Negative  = {n_negative:6d}     (erlaubt: 0)")
 
-    ok = (
-        m < THRESHOLD_MAPE
-        and abs(bias_pct) <= MAX_ABS_BIAS_PCT
-        and n_negative == 0
-    )
+    ok = m < THRESHOLD_MAPE and abs(bias_pct) <= MAX_ABS_BIAS_PCT and n_negative == 0
     print("RESULT    =", "PASS" if ok else "FAIL")
     sys.exit(0 if ok else 1)
 

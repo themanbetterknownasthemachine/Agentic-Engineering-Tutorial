@@ -1,4 +1,6 @@
-import sys, json, re
+import json
+import re
+import sys
 
 try:
     data = json.load(sys.stdin)
