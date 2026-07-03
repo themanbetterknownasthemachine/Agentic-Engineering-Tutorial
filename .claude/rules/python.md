@@ -9,5 +9,5 @@ paths:
 - Forecasting: no feature leakage. Never use features unknown at prediction time.
 - Half-days (IS_HALBTAG) are statistically fragile (very few training rows):
   always sanity-check sign and magnitude of coefficients, never trust them blindly.
-- Before deploying a forecast, the holdout must pass `python eval/eval_forecast.py`.
+- Before deploying a forecast, the holdout must pass the project verifier `python eval/eval_<thema>.py`.
 - Prefer pandas/numpy vectorization; keep functions small and testable.

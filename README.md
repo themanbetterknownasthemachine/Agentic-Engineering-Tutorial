@@ -54,7 +54,8 @@ Das machst du (oder ein Teammitglied) bei jedem neuen Projekt:
    optional `/init` laufen lassen, um die `CLAUDE.md` aus dem echten Code zu verfeinern.
 4. `/spec` laufen lassen, kleine abgegrenzte Spec nach `docs/specs/active/`.
 5. `/criteria` laufen lassen, Definition of Done in `CLAUDE.md` übernehmen.
-6. Verifier bauen (`eval/eval_forecast.py` oder dbt-Tests), bevor implementiert wird.
+6. Verifier bauen, bevor implementiert wird: passendes Beispiel aus `eval/examples/` nach
+   `eval/eval_<thema>.py` kopieren (Kontrakt: `eval/README.md`); für DWH sind dbt-Tests der Verifier.
 7. MCP und Wissensbasis anbinden; Permissions und Hooks sind bereits aktiv.
 
 Einen vollständigen Beispiel-Durchlauf von der Spec bis zur produktiven View, inklusive einer
@@ -82,8 +83,8 @@ Einen vollständigen Beispiel-Durchlauf von der Spec bis zur produktiven View, i
 - **.mcp.json** - geteilte MCP-Server (Snowflake, GitHub). Nur env-Referenzen, keine Secrets.
 - **docs/** - `architecture.md`, `adr/` (Architecture Decision Records), `specs/active` und
   `specs/completed`, `runbooks/`.
-- **eval/eval_forecast.py** - der maschinelle Verifier (MAPE/Bias/Plausibilität, Exit-Code als
-  Reward-Signal).
+- **eval/** - der Verifier-Baukasten (Exit-Code als Reward-Signal). Kontrakt in `eval/README.md`,
+  kopierbare Beispiele in `eval/examples/`.
 - **scripts/** - `setup`, `lint`, `test`, `verify` als ausführbare Einstiegspunkte.
 
 ## Wichtig: Kontext gegen Durchsetzung

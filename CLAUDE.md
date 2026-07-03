@@ -30,7 +30,7 @@ For new work, run `/spec` and `/criteria` before implementing; see @docs/WORKFLO
 - Install: `uv sync`
 - Build + test (dbt): `dbtf build`
 - Tests only: `dbtf test`
-- Forecast eval (verifier): `python eval/eval_forecast.py --holdout <file>.parquet`
+- Project verifier: `python eval/eval_<thema>.py` (contract + examples: `eval/README.md`)
 - Lint + type check: `bash scripts/lint.sh`
 - All checks: `bash scripts/verify.sh`
 
@@ -44,7 +44,8 @@ For new work, run `/spec` and `/criteria` before implementing; see @docs/WORKFLO
 ## Non-negotiable rules
 - IMPORTANT: never read, print, or modify `.env`, `*.p8`, or any credential files.
 - IMPORTANT: never run `DROP`, `DELETE`, or `TRUNCATE` against Snowflake without explicit approval.
-- Never deploy a forecast that fails `python eval/eval_forecast.py` (exit != 0).
+- Never deploy an output that fails its verifier `eval/eval_<thema>.py` (exit != 0).
+  For DWH work, `dbtf test` is the verifier.
 - Schema changes go through a dbt model change, never ad-hoc DDL.
 - Never delete failing tests to make the suite pass.
 - Do not push or merge unless explicitly requested.
@@ -52,7 +53,9 @@ For new work, run `/spec` and `/criteria` before implementing; see @docs/WORKFLO
 ## Definition of done
 A change is complete only when:
 - relevant tests pass; lint passes; type checking passes;
-- for forecasts: MAPE < 8 % on holdout, bias near zero, no negative predictions, half-days checked;
+- the project quality bar is met: <QUALITY_BAR>
+  (define per project, e.g. for a forecast: MAPE/WAPE below threshold on holdout,
+  bias near zero, no negative predictions, half-days checked);
 - documentation is updated when behavior changes;
 - no secrets or generated artifacts were committed.
 
