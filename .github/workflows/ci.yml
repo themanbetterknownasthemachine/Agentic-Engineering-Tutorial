@@ -1,0 +1,97 @@
+# CI = derselbe Verifier wie lokal (scripts/verify.sh), nur automatisiert.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: uv installieren
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Dependencies installieren
+        run: uv sync
+
+      - name: Ruff (Lint)
+        run: uv run ruff check .
+
+      - name: Ruff (Format)
+        run: uv run ruff format --check .
+
+      - name: mypy (Typecheck)
+        run: uv run python -m mypy src eval
+
+      - name: pytest
+        run: uv run python -m pytest
+
+      - name: Projekt-Verifier (eval/eval_*.py)
+        run: |
+          shopt -s nullglob
+          for v in eval/eval_*.py; do
+            echo "Verifier: $v"
+            uv run python "$v"
+          done
+
+  # Laeuft nur, wenn Snowflake-Secrets im Repo gesetzt sind (Secret-Guard).
+  # Job-level "if" kann Secrets nicht lesen, daher der Guard-Step.
+  dbt:
+    runs-on: ubuntu-latest
+    needs: python
+    env:
+      SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+      SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+      SNOWFLAKE_PRIVATE_KEY: ${{ secrets.SNOWFLAKE_PRIVATE_KEY }}
+      SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
+      SNOWFLAKE_DATABASE: ${{ secrets.SNOWFLAKE_DATABASE }}
+      SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
+    steps:
+      - name: Secret-Guard
+        id: guard
+        run: |
+          if [ -z "${SNOWFLAKE_ACCOUNT}" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "Keine Snowflake-Secrets gesetzt - dbt-Job wird uebersprungen."
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.guard.outputs.skip != 'true'
+
+      - name: dbt installieren
+        if: steps.guard.outputs.skip != 'true'
+        run: pipx install dbt-core && pipx inject dbt-core dbt-snowflake
+
+      - name: Key-Pair ablegen
+        if: steps.guard.outputs.skip != 'true'
+        run: |
+          printf '%s' "$SNOWFLAKE_PRIVATE_KEY" > "$RUNNER_TEMP/sf_key.p8"
+          echo "SNOWFLAKE_PRIVATE_KEY_PATH=$RUNNER_TEMP/sf_key.p8" >> "$GITHUB_ENV"
+
+      - name: dbt build (inkl. Tests)
+        if: steps.guard.outputs.skip != 'true'
+        run: |
+          cat > profiles.yml <<'EOF'
+          bida_project:
+            target: ci
+            outputs:
+              ci:
+                type: snowflake
+                account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
+                user: "{{ env_var('SNOWFLAKE_USER') }}"
+                authenticator: snowflake_jwt
+                private_key_path: "{{ env_var('SNOWFLAKE_PRIVATE_KEY_PATH') }}"
+                role: "{{ env_var('SNOWFLAKE_ROLE') }}"
+                database: "{{ env_var('SNOWFLAKE_DATABASE') }}"
+                warehouse: "{{ env_var('SNOWFLAKE_WAREHOUSE') }}"
+                schema: "{{ env_var('SNOWFLAKE_SCHEMA', 'CI') }}"
+                threads: 4
+          EOF
+          dbt deps
+          dbt build --profiles-dir .
