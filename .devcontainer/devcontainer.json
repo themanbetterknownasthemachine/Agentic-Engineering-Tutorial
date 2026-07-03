@@ -1,0 +1,21 @@
+{
+  "name": "BIDA Agentic Template",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {}
+  },
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "charliermarsh.ruff",
+        "ms-python.python",
+        "ms-python.mypy-type-checker",
+        "innoverio.vscode-dbt-power-user"
+      ]
+    }
+  },
+  "remoteEnv": {
+    "UV_LINK_MODE": "copy"
+  }
+}
