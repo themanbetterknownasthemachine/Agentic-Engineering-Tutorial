@@ -2,10 +2,24 @@ version: 2
 
 models:
   - name: mart_example__orders_daily
-    description: "Beispiel-Mart: Bestellungen pro Tag."
+    description: "Beispiel-Mart: Bestellungen pro Tag. Zeigt einen erzwungenen Data Contract."
+    # contract: enforced -> dbt prueft beim Build Schema + Datentypen gegen den Vertrag.
+    # Fachlicher Vertrag: docs/contracts/ (Vorlage _template.md).
+    config:
+      contract:
+        enforced: true
     columns:
       - name: ORDER_DATE
         description: "Kalendertag (Schluessel des Marts)."
+        data_type: date
+        constraints:
+          - type: not_null
         tests:
           - unique
           - not_null
+      - name: ORDER_COUNT
+        description: "Anzahl Bestellungen an diesem Tag."
+        data_type: number
+      - name: TOTAL_AMOUNT
+        description: "Summe der Betraege an diesem Tag."
+        data_type: number
