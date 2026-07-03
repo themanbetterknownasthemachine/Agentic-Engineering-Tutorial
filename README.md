@@ -24,7 +24,11 @@ View findest du in [`docs/WORKFLOW.md`](docs/WORKFLOW.md).
 
 Beim Start eines neuen Projekts nur diese Dateien anfassen, der Rest des Skeletts bleibt unverändert:
 
-- [ ] **CLAUDE.md**: `<PROJECT_NAME>` und Beschreibung ersetzen, Stack, Schemas, Rollen und Quality-Bar anpassen
+- [ ] **Domäne wählen**: `bash scripts/init-domain.sh <ml|de|dwh|pbi>` entfernt nicht
+      benötigte Domänen-Ordner (siehe `docs/domain-setup/`)
+- [ ] **AGENTS.md**: `<PROJECT_NAME>`, Stack, Architektur, `<QUALITY_BAR>` setzen
+      (geteilte Quelle der Wahrheit; CLAUDE.md importiert sie)
+- [ ] **CLAUDE.md**: `<PROJECT_NAME>` und Beschreibung ersetzen (Kern liegt in AGENTS.md)
 - [ ] **.env**: aus `.env.example` kopieren und Werte eintragen (wird nie committet)
 - [ ] **.mcp.json**: Platzhalter `REPLACE_WITH_YOUR_SNOWFLAKE_MCP_COMMAND` durch den echten Snowflake-MCP-Befehl ersetzen
 - [ ] **README.md / docs/architecture.md**: optional an das konkrete Projekt anpassen
@@ -47,9 +51,9 @@ Das machst du (oder ein Teammitglied) bei jedem neuen Projekt:
 
 1. Auf GitHub oben rechts "Use this template" klicken, ein neues Repo anlegen und klonen.
    (Ohne GitHub: den Template-Ordner kopieren und umbenennen.)
-2. Die vier Dateien aus der Checkliste oben anpassen: `CLAUDE.md` (Pfadspezifisches nach
-   `.claude/rules/`), `.env` (aus `.env.example`), `.mcp.json` und optional `README.md` /
-   `docs/architecture.md`.
+2. Domäne wählen (`bash scripts/init-domain.sh <ml|de|dwh|pbi>`) und die Dateien aus der
+   Checkliste oben anpassen: `AGENTS.md` (Kern), `CLAUDE.md`, `.env` (aus `.env.example`),
+   `.mcp.json` und optional `README.md` / `docs/architecture.md`.
 3. `claude` im Projekt-Root starten. Mit `/memory` prüfen, welche Dateien geladen sind, und
    optional `/init` laufen lassen, um die `CLAUDE.md` aus dem echten Code zu verfeinern.
 4. `/spec` laufen lassen, kleine abgegrenzte Spec nach `docs/specs/active/`.
@@ -72,21 +76,27 @@ Einen vollständigen Beispiel-Durchlauf von der Spec bis zur produktiven View, i
   `dax.md`, `airflow.md`, `testing.md` - je an ihre Domänen-Pfade gebunden.
 - **.claude/skills/** - wiederholbare Abläufe, je mit `/name` aufrufbar oder vom Modell bei
   Bedarf genutzt. Hier: `spec` (Interview zum Spec bauen), `criteria` (Evaluationskriterien),
-  `review` (zweites Modell als Kritiker).
+  `review` (zweites Modell als Kritiker), `handover` (äußeren Loop schließen).
 - **.claude/agents/** - spezialisierte Subagents mit eingegrenzter Fähigkeit. `code-reviewer`
   und `security-reviewer` sind read-only (`tools: Read, Grep, Glob`), können also prüfen, aber
   nichts ändern. Subagents nutzen, um Fähigkeit einzugrenzen, nicht nur um zu parallelisieren.
 - **.claude/settings.json** - Berechtigungen (allow/deny) und Hook-Konfiguration. Geteilt,
   wird committet.
-- **.claude/hooks/** - Skripte für Lifecycle-Events. `protect-files.sh` ist ein PreToolUse-Hook,
-  der `.env`, `*.p8` und `DROP/DELETE/TRUNCATE` hart blockt (Exit-Code 2). `validate-changes.sh`
+- **.claude/hooks/** - Skripte für Lifecycle-Events. `protect-files.sh` ist ein PreToolUse-Hook
+  (Exit-Code 2), der Zugriffe auf Credential-Dateien und destruktives SQL im Ausführungskontext
+  blockt (Details und Zwei-Schichten-Logik: `.claude/rules/security.md`). `validate-changes.sh`
   ist ein PostToolUse-Hook, der nach Edits Ruff bzw. sqlfluff laufen lässt.
+- **AGENTS.md** - geteilter Kern-Kontext für alle Coding-Agents (auch Codex/VS-Code).
+  CLAUDE.md importiert ihn per `@AGENTS.md` (eine Quelle der Wahrheit).
 - **.mcp.json** - geteilte MCP-Server (Snowflake, GitHub). Nur env-Referenzen, keine Secrets.
-- **docs/** - `architecture.md`, `adr/` (Architecture Decision Records), `specs/active` und
-  `specs/completed`, `runbooks/`.
+- **docs/** - `architecture.md`, `adr/`, `specs/active` und `specs/completed`, `runbooks/`,
+  `domain-setup/` (pro Domäne behalten/löschen) und `contracts/` (Data-Contracts-Vorlage).
 - **eval/** - der Verifier-Baukasten (Exit-Code als Reward-Signal). Kontrakt in `eval/README.md`,
   kopierbare Beispiele in `eval/examples/`.
-- **scripts/** - `setup`, `lint`, `test`, `verify` als ausführbare Einstiegspunkte.
+- **models/, macros/, seeds/** - dbt-Grundgerüst (Beispielmodelle + Tests, `.sqlfluff`).
+- **Domänen-Ordner** - `powerbi/`, `oracle/`, `dags/`, `src/`, `notebooks/` (je mit README);
+  nicht benötigte per `bash scripts/init-domain.sh <ml|de|dwh|pbi>` entfernen.
+- **scripts/** - `setup`, `lint`, `test`, `verify`, `init-domain` als ausführbare Einstiegspunkte.
 
 ## Wichtig: Kontext gegen Durchsetzung
 
