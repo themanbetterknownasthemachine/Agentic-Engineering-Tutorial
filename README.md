@@ -26,7 +26,7 @@ Beim Start eines neuen Projekts nur diese Dateien anfassen, der Rest des Skelett
 Empfohlen: `bash scripts/init-project.sh` (Wizard) fragt die Kernwerte ab, ersetzt die Platzhalter
 und entfernt den `.template`-Marker. Manuell geht es über die Checkliste:
 
-- [ ] **Domäne wählen**: `bash scripts/init-domain.sh <ml|de|dwh|pbi>` entfernt nicht
+- [ ] **Domäne wählen**: `bash scripts/init-domain.sh <ml|de|dwh>` entfernt nicht
       benötigte Domänen-Ordner (siehe `docs/domain-setup/`)
 - [ ] **`.template` entfernen** (macht `init-project.sh` automatisch): erst ohne diesen Marker
       erzwingt `check-template.sh` gefüllte Platzhalter
@@ -57,7 +57,7 @@ Das machst du (oder ein Teammitglied) bei jedem neuen Projekt:
 1. Auf GitHub oben rechts "Use this template" klicken, ein neues Repo anlegen und klonen.
    (Ohne GitHub: den Template-Ordner kopieren und umbenennen.)
 2. `bash scripts/init-project.sh` (Setup-Wizard) laufen lassen — füllt Platzhalter und
-   entfernt `.template`. Danach Domäne wählen (`bash scripts/init-domain.sh <ml|de|dwh|pbi>`)
+   entfernt `.template`. Danach Domäne wählen (`bash scripts/init-domain.sh <ml|de|dwh>`)
    und Rest der Checkliste (`.env`, `.mcp.json`, optional Docs). `bash scripts/check-template.sh`
    bestätigt, dass keine Platzhalter offen sind.
 3. `claude` im Projekt-Root starten. Mit `/memory` prüfen, welche Dateien geladen sind, und
@@ -79,7 +79,7 @@ Einen vollständigen Beispiel-Durchlauf von der Spec bis zur produktiven View, i
 - **.claude/rules/** - modulare Regeln. Dateien mit `paths`-Frontmatter laden nur, wenn Claude
   an passenden Dateien arbeitet (spart Kontext); Dateien ohne `paths` laden immer. Hier:
   `security.md` (immer), `python.md`, `forecasting.md`, `dbt-snowflake.md`, `oracle.md`,
-  `dax.md`, `airflow.md`, `testing.md` - je an ihre Domänen-Pfade gebunden.
+  `airflow.md`, `testing.md` - je an ihre Domänen-Pfade gebunden.
 - **.claude/skills/** - wiederholbare Abläufe, je mit `/name` aufrufbar oder vom Modell bei
   Bedarf genutzt. Hier: `spec` (Interview zum Spec bauen), `criteria` (Evaluationskriterien),
   `review` (zweites Modell als Kritiker), `handover` (äußeren Loop schließen).
@@ -98,8 +98,8 @@ Einen vollständigen Beispiel-Durchlauf von der Spec bis zur produktiven View, i
 - **eval/** - der Verifier-Baukasten (Exit-Code als Reward-Signal). Kontrakt in `eval/README.md`,
   kopierbare Beispiele in `eval/examples/`.
 - **models/, macros/, seeds/** - dbt-Grundgerüst (Beispielmodelle + Tests, `.sqlfluff`).
-- **Domänen-Ordner** - `powerbi/`, `oracle/`, `dags/`, `src/`, `notebooks/` (je mit README);
-  nicht benötigte per `bash scripts/init-domain.sh <ml|de|dwh|pbi>` entfernen.
+- **Domänen-Ordner** - `oracle/`, `dags/`, `src/`, `notebooks/` (je mit README);
+  nicht benötigte per `bash scripts/init-domain.sh <ml|de|dwh>` entfernen.
 - **scripts/** - `setup`, `lint`, `test`, `verify`, `init-domain` als ausführbare Einstiegspunkte.
 
 ## Wichtig: Kontext gegen Durchsetzung

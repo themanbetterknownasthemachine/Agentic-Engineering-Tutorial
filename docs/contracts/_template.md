@@ -3,7 +3,7 @@
 - **Owner:** <Team / Person>
 - **Status:** draft | active | deprecated
 - **Version:** 1.0.0
-- **Consumer:** <Power BI Report / ML-Modell / Team>
+- **Consumer:** <BI-Report / ML-Modell / Team>
 
 ## Zweck
 <Was beschreibt dieses Datenprodukt fachlich, eine Zeile.>

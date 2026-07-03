@@ -14,9 +14,9 @@ danach Änderungen prüfen und committen.
 ## Entfernt durch init-domain.sh
 - dbt-Stack: `models/`, `macros/`, `seeds/`, `snapshots/`, `tests/dbt/`,
   `dbt_project.yml`, `packages.yml`, `profiles.yml.example`, `.sqlfluff`
-- `oracle/`, `powerbi/`
+- `oracle/`
 
 ## Danach anpassen
 - `CLAUDE.md`: Technology/Architecture auf den ML-Stack kürzen, `<QUALITY_BAR>` setzen.
-- Nicht mehr passende Rules (`dbt-snowflake.md`, `oracle.md`, `dax.md`) laden ohne
+- Nicht mehr passende Rules (`dbt-snowflake.md`, `oracle.md`) laden ohne
   ihre Pfade nie - können optional gelöscht werden.

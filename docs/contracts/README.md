@@ -1,7 +1,7 @@
 # Data Contracts
 
 Ein Data Contract macht die Zusage eines Datenprodukts explizit: Schema, Bedeutung,
-Freshness und Verantwortlichkeit. Consumer (Power BI, ML, andere Teams) verlassen
+Freshness und Verantwortlichkeit. Consumer (BI-Reports, ML, andere Teams) verlassen
 sich darauf; Änderungen sind bewusst und versioniert.
 
 ## Zwei Ebenen

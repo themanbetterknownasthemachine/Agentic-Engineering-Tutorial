@@ -12,7 +12,7 @@ danach Änderungen prüfen und committen.
 - `scripts/`, `.claude/`, `docs/`
 
 ## Entfernt durch init-domain.sh
-- `oracle/`, `powerbi/`, `dags/`, `notebooks/`
+- `oracle/`, `dags/`, `notebooks/`
 
 ## Danach anpassen
 - `profiles.yml.example` nach `~/.dbt/profiles.yml` kopieren und Werte setzen.

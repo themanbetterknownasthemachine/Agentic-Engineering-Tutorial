@@ -6,7 +6,7 @@ Das Grundprinzip dahinter: erst spezifizieren (Spec), dann ein maschinell prüfb
 
 ## Beispiel-Vorhaben
 
-Tägliche Prognose des Wareneingangsvolumens (Paletten pro Tag) je Standort, damit die Kapazität am Wareneingang (Personal, Tore, Stellplätze) vorausschauend geplant werden kann. Konsum in Power BI.
+Tägliche Prognose des Wareneingangsvolumens (Paletten pro Tag) je Standort, damit die Kapazität am Wareneingang (Personal, Tore, Stellplätze) vorausschauend geplant werden kann. Konsum über ein BI-Dashboard.
 
 ## 1. Repo anlegen
 
@@ -43,7 +43,7 @@ Im Projekt-Root `claude` starten, mit `/memory` prüfen, welche Dateien geladen 
 > **Du:** Paletten pro Tag je Standort, 14 Tage voraus.
 >
 > **Claude:** Welche Daten und Constraints gelten?
-> **Du:** Historie in Snowflake, Features über DIM_DATE (AT=1), Rolle ROLE_ML_TESTING, Konsum in Power BI via DirectQuery.
+> **Du:** Historie in Snowflake, Features über DIM_DATE (AT=1), Rolle ROLE_ML_TESTING, Konsum über ein BI-Dashboard.
 >
 > **Claude:** Akzeptanzkriterium?
 > **Du:** MAPE unter 12 Prozent, keine negativen Werte, Bias nahe null.
@@ -52,7 +52,7 @@ Ergebnis: eine kurze Spec nach `docs/specs/active/wareneingang_forecast.md`:
 
 ```text
 # Spec: Wareneingangs-Forecast
-Ziel: Tagesgenaue Prognose Wareneingangsvolumen je Standort, Konsum via Power BI.
+Ziel: Tagesgenaue Prognose Wareneingangsvolumen je Standort, Konsum über ein BI-Dashboard.
 Zielgrösse: Paletten/Tag   Horizont: 14 Tage
 Features: DIM_DATE (AT=1), Wochentag, Vorjahreswert -364 Tage, Feiertags-Flags
 Akzeptanz: MAPE < 12 %, keine negativen Werte, Bias nahe null
@@ -75,13 +75,13 @@ Erst das Mess-Skript, dann implementieren lassen. `eval/eval_wareneingang.py`:
 ```python
 import pandas as pd, numpy as np, sys
 
-df = pd.read_parquet("holdout.parquet")           # Spalten: y_true, y_pred
+df = pd.read_parquet("holdout.parquet")  # Spalten: y_true, y_pred
 mape = np.mean(np.abs((df.y_true - df.y_pred) / df.y_true)) * 100
-neg  = (df.y_pred < 0).sum()
+neg = (df.y_pred < 0).sum()
 bias = np.mean(df.y_pred - df.y_true)
 
 print(f"MAPE={mape:.2f}% | Bias={bias:+.1f} | Negative={neg}")
-sys.exit(0 if (mape < 12 and neg == 0) else 1)    # Exit-Code = Reward
+sys.exit(0 if (mape < 12 and neg == 0) else 1)  # Exit-Code = Reward
 ```
 
 Warum: Das ist der Schritt, den die meisten überspringen. Mit diesem Signal kannst du grosse Blöcke sicher delegieren.
@@ -98,7 +98,7 @@ Warum: Genau das ist der Hebel, implementieren gegen ein prüfbares Erfolgssigna
 
 ## 8. Review und Deploy
 
-Den `code-reviewer`-Subagent über den Diff laufen lassen, die Annahmen fachlich prüfen (Plausibilität, kein Feature-Leakage), die Tests ausführen, die Spec nach `docs/specs/completed/` verschieben, die View deployen. Power BI konsumiert sie.
+Den `code-reviewer`-Subagent über den Diff laufen lassen, die Annahmen fachlich prüfen (Plausibilität, kein Feature-Leakage), die Tests ausführen, die Spec nach `docs/specs/completed/` verschieben, die View deployen. Das BI-Dashboard konsumiert sie.
 
 Warum: Tests fangen das Mechanische, dein Urteil fängt das Architektonische. Ein grüner MAPE-Wert ist nicht automatisch deploy-reif.
 

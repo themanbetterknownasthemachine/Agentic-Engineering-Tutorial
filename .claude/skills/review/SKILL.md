@@ -10,8 +10,7 @@ and the criteria in `docs/specs/active/`. Do not rubber-stamp.
 
 Check specifically:
 - Does the verifier pass (`python eval/eval_<thema>.py` bzw. `dbtf test`, exit 0)?
-- Any feature leakage or a coefficient that is semantically implausible?
-- For Power BI measures: do they return only numeric or BLANK(), never a Variant type?
+- Any feature leakage or a coefficient that is semantically implausible? (ML work)
 - Tests, lint, and type checks green? Docs updated? No secrets committed?
 
 Report issues as a short, prioritized, actionable list. If something is unclear, ask before approving.

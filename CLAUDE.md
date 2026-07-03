@@ -3,7 +3,7 @@
 <One-line description of what this repository does.>
 
 Pistor BIDA project. Stack: `<STACK>` (fill per project — e.g. dbt + Snowflake,
-Python forecasting, Power BI, or Oracle; see `docs/domain-setup/`).
+Python forecasting, or Oracle; see `docs/domain-setup/`).
 Keep this file concise (target < 200 lines). Detailed, path-specific conventions live in
 `.claude/rules/` and load automatically; multi-step procedures live in `.claude/skills/`.
 
@@ -31,7 +31,6 @@ Spec and verifier first, code second. Do not start coding without both.
 - Forecasting (ML projects only): pandas, scikit-learn, statsmodels,
   NeuralForecast, LightGBM — keep only what you actually use.
 - Orchestration (optional): Apache Airflow (`dags/`, `.claude/rules/airflow.md`).
-- Consumption (optional): Power BI (`powerbi/`, `.claude/rules/dax.md`).
 - Dev schema: `<DEV_SCHEMA>`
 
 ## Architecture
@@ -41,7 +40,7 @@ Spec and verifier first, code second. Do not start coding without both.
 
 - Transformations live in `models/` (dbt); never hand-write DDL in the warehouse UI.
 - ML inference objects: `<INFERENCE_DB>.<INFERENCE_SCHEMA>.V_<PROJEKT>_*`
-- Optional domain folders (`powerbi/`, `oracle/`, `dags/`, `notebooks/`):
+- Optional domain folders (`oracle/`, `dags/`, `notebooks/`):
   see `docs/domain-setup/`.
 - Detailed architecture: `docs/architecture.md`
 
@@ -81,7 +80,7 @@ A change is complete only when:
 
 ## Claude-Code building blocks
 - Path-bound conventions load automatically from `.claude/rules/`
-  (dbt-snowflake, oracle, dax, airflow, python, forecasting, testing, security).
+  (dbt-snowflake, oracle, airflow, python, forecasting, testing, security).
 - Repeatable procedures as skills: `/spec`, `/criteria`, `/review`, `/handover`.
 - Read-only subagents for checking: `code-reviewer`, `security-reviewer`.
 

@@ -13,7 +13,7 @@ danach Änderungen prüfen und committen.
 - `tests/`, `scripts/`, `.claude/`, `docs/`
 
 ## Entfernt durch init-domain.sh
-- `powerbi/`, `notebooks/`
+- `notebooks/`
 
 ## Danach anpassen
 - Nicht gebrauchte Teile (z. B. `oracle/` ohne Oracle-Quelle, oder den dbt-Stack
