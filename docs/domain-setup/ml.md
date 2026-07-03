@@ -22,6 +22,17 @@ danach Änderungen prüfen und committen.
   ihre Pfade nie - können optional gelöscht werden.
 - ML-Abhängigkeiten installieren: `uv sync --group ml` (siehe `pyproject.toml`).
 
+> **OFFEN — vor dem ersten ML-Projekt erledigen (mit IT abzuklären: uv oder conda):**
+> - `uv sync --group ml` wurde bisher **noch nicht ausgeführt** — der ML-Stack
+>   (torch/xgboost/snowflake, ~150 Pakete) ist nie installiert worden. Einmal gegen
+>   den Ziel-Index laufen lassen und prüfen (torch-Wheels/Plattform; CUDA-torch ist
+>   im `uv.lock` nur für `sys_platform == 'linux'` aufgelöst, Windows = CPU-Build).
+> - Falls die IT **conda** vorgibt: Template ist aktuell rein uv-basiert. Dann braucht
+>   es eine **Hybrid-Lösung** (conda-Env + pip): `environment.yml`/`environment-ml.yml`,
+>   Skripte/CI ohne `uv run`-Prefix, `[dependency-groups]` → `[project.optional-dependencies]`
+>   (Extras `.[dev]`/`.[ml]`), GPU-pytorch aus conda. Setup erst nach dieser Entscheidung
+>   finalisieren.
+
 ## ML-Methodik aus dem BIDA-ML-Starter
 
 Das Methodenwissen (wie man forecastet, klassifiziert, regressiert) lebt bewusst
