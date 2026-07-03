@@ -1,13 +1,15 @@
 {
   "permissions": {
     "allow": [
-      "Bash(dbtf build*)",
-      "Bash(dbtf test*)",
-      "Bash(uv run pytest*)",
-      "Bash(uv run ruff*)",
-      "Bash(uv run mypy*)",
-      "Bash(python eval/*)",
-      "Bash(bash scripts/*)",
+      "Bash(dbtf build:*)",
+      "Bash(dbtf test:*)",
+      "Bash(uv run pytest:*)",
+      "Bash(uv run ruff:*)",
+      "Bash(uv run mypy:*)",
+      "Bash(uv run python -m pytest:*)",
+      "Bash(uv run python -m mypy:*)",
+      "Bash(python eval/:*)",
+      "Bash(bash scripts/:*)",
       "Read",
       "Edit",
       "Write",
@@ -15,14 +17,15 @@
       "Glob"
     ],
     "deny": [
-      "Read(.env)",
+      "Read(./.env)",
       "Read(**/*.p8)",
       "Read(**/*.pem)",
       "Read(**/*.key)",
-      "Bash(*DROP *)",
-      "Bash(*DELETE *)",
-      "Bash(*TRUNCATE *)",
-      "Bash(git push*)"
+      "Edit(./.env)",
+      "Edit(**/*.p8)",
+      "Edit(**/*.pem)",
+      "Edit(**/*.key)",
+      "Bash(git push:*)"
     ]
   },
   "hooks": {
