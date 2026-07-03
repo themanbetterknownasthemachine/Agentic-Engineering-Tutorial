@@ -10,6 +10,14 @@ paths:
 
 # dbt / Snowflake rules
 
+Firm-stable conventions (identical across Pistor dbt/Snowflake projects). They live
+here, not in AGENTS.md/CLAUDE.md, so they load path-bound and stay project-independent.
+
+## Tooling
+- dbt CLI is `dbtf` (Pistor wrapper): `dbtf build`, `dbtf test`, `dbtf run-operation`.
+- Snowflake auth is key-pair (`authenticator: snowflake_jwt`); never passwords.
+  Profile template: `profiles.yml.example` (values from env vars).
+
 ## dbt conventions
 - Staging models: `stg_<source>__<entity>` (double underscore); marts: `mart_<bereich>__<thema>`.
 - Column names UPPER_SNAKE_CASE. No `SELECT *`.

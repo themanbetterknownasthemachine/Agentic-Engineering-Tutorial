@@ -14,33 +14,37 @@ Spec and verifier first, code second. Do not start coding without both.
   repeat until the verifier passes.
 
 ## Technology
-> The stack below is the **default** (Snowflake + dbt). Trim or swap it per project
-> — e.g. an Oracle project replaces the Snowflake/dbt lines and drops `models/`.
-> Keep only what the project actually uses; see `docs/domain-setup/`.
+> Fill the `<PLACEHOLDER>` values for your project and keep only the tools you use.
+> Only the language/tooling line is required for every project; the rest is per-domain.
+> See `docs/domain-setup/`.
 
-- Data platform: Snowflake (Data Vault 2.0), dbt-core + dbt-snowflake, CLI: `dbtf`
-  — **or** Oracle (see `.claude/rules/oracle.md`; no dbt/DIM_DATE there).
-- Python 3.12 (uv), pandas, scikit-learn, statsmodels, NeuralForecast, LightGBM
-- Apache Airflow (orchestration), Power BI (consumption)
-- Auth (Snowflake): key-pair (`snowflake_jwt`). Dev schema: `DBT_BUT`.
+- Language/tooling (all projects): Python 3.12 (uv), Ruff, mypy, pytest.
+- Data platform (choose one): Snowflake + dbt (`.claude/rules/dbt-snowflake.md`)
+  or Oracle (`.claude/rules/oracle.md`).
+- Forecasting (ML projects only): pandas, scikit-learn, statsmodels,
+  NeuralForecast, LightGBM — keep only what you actually use.
+- Orchestration (optional): Apache Airflow (`dags/`, `.claude/rules/airflow.md`).
+- Consumption (optional): Power BI (`powerbi/`, `.claude/rules/dax.md`).
+- Dev schema: `<DEV_SCHEMA>`
 
 ## Architecture
-> Platform-specific; applies to the default Snowflake stack. Adjust for the project's platform.
+> Fill the `<PLACEHOLDER>` values; adjust for the project's platform. Firm-stable
+> dbt/Snowflake conventions (DIM_DATE/AT=1, COPY INTO, naming, `dbtf`, key-pair auth)
+> are NOT repeated here — they live in `.claude/rules/dbt-snowflake.md` (load path-bound).
 
-- Transformations live in `models/` (dbt). Never write manual DDL in Snowsight.
-- Time intelligence always via `DIM_DATE`; `AT = 1` = Pistor working-day logic.
-  (Snowflake-specific — does not apply to Oracle projects.)
-- ML inference views: `BUT_LANDING.ML_INFERENCE.V_FORECAST_*`
+- Transformations live in `models/` (dbt); never hand-write DDL in the warehouse UI.
+- ML inference objects: `<INFERENCE_DB>.<INFERENCE_SCHEMA>.V_<PROJEKT>_*`
 - Optional domain folders (`powerbi/`, `oracle/`, `dags/`, `notebooks/`):
   see `docs/domain-setup/`.
+- Detailed architecture: `docs/architecture.md`
 
 ## Commands
 - Install: `uv sync`
-- Build + test (dbt): `dbtf build`
-- Tests only: `dbtf test`
 - Project verifier: `python eval/eval_<thema>.py` (contract + examples: `eval/README.md`)
 - Lint + type check: `bash scripts/lint.sh`
 - All checks: `bash scripts/verify.sh`
+- Template check (open placeholders): `bash scripts/check-template.sh`
+- dbt (DWH only): `dbtf build`, `dbtf test` (see `.claude/rules/dbt-snowflake.md`)
 
 ## Workflow
 1. Understand the relevant models and existing tests first.

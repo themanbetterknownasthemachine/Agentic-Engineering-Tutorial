@@ -26,9 +26,11 @@ Beim Start eines neuen Projekts nur diese Dateien anfassen, der Rest des Skelett
 
 - [ ] **Domäne wählen**: `bash scripts/init-domain.sh <ml|de|dwh|pbi>` entfernt nicht
       benötigte Domänen-Ordner (siehe `docs/domain-setup/`)
-- [ ] **AGENTS.md**: `<PROJECT_NAME>`, Stack, Architektur, `<QUALITY_BAR>` setzen
-      (geteilte Quelle der Wahrheit; CLAUDE.md importiert sie)
-- [ ] **CLAUDE.md**: `<PROJECT_NAME>` und Beschreibung ersetzen (Kern liegt in AGENTS.md)
+- [ ] **AGENTS.md**: alle `<PLACEHOLDER>` füllen — `<PROJECT_NAME>`, `<STACK>`, Domänen-Tools,
+      `<DEV_SCHEMA>`, Inferenz-Objektreferenz (`<INFERENCE_DB>.<INFERENCE_SCHEMA>.V_<PROJEKT>_*`),
+      `<QUALITY_BAR>` (geteilte Quelle der Wahrheit; CLAUDE.md importiert sie)
+- [ ] **CLAUDE.md**: `<PROJECT_NAME>`, `<STACK>` und Beschreibung ersetzen (Kern liegt in AGENTS.md)
+- [ ] **Prüfen**: `bash scripts/check-template.sh` muss ohne offene Platzhalter durchlaufen
 - [ ] **.env**: aus `.env.example` kopieren und Werte eintragen (wird nie committet)
 - [ ] **.mcp.json**: Platzhalter `REPLACE_WITH_YOUR_SNOWFLAKE_MCP_COMMAND` durch den echten Snowflake-MCP-Befehl ersetzen
 - [ ] **README.md / docs/architecture.md**: optional an das konkrete Projekt anpassen

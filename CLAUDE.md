@@ -2,9 +2,15 @@
 
 <One-line description of what this repository does.>
 
-This is a Pistor BIDA data/ML project (dbt + Snowflake, Python forecasting, Power BI).
+Pistor BIDA project. Stack: `<STACK>` (fill per project — e.g. dbt + Snowflake,
+Python forecasting, Power BI, or Oracle; see AGENTS.md and `docs/domain-setup/`).
 Keep this file concise (target < 200 lines). Detailed, path-specific conventions live in
 `.claude/rules/` and load automatically; multi-step procedures live in `.claude/skills/`.
+
+> Setup gate: if any `<PLACEHOLDER>` (e.g. `<PROJECT_NAME>`, `<STACK>`, `<DEV_SCHEMA>`,
+> `<QUALITY_BAR>`, inference-object refs) is still present, the project is not set up.
+> Stop and complete the checklist in README.md ("Pro Projekt anpassen") before building.
+> Verify with `bash scripts/check-template.sh`.
 
 ## Shared core (single source of truth)
 The operating principle, technology, architecture, commands, workflow, non-negotiable

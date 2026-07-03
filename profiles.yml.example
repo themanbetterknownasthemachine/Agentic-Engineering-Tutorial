@@ -13,5 +13,5 @@ bida_project:
       role: <YOUR_ROLE>
       database: <YOUR_DATABASE>
       warehouse: <YOUR_WAREHOUSE>
-      schema: DBT_BUT
+      schema: <DEV_SCHEMA>   # Pistor-Konvention: DBT_<KUERZEL>, z. B. DBT_ABC
       threads: 4
