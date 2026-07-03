@@ -1,0 +1,16 @@
+[sqlfluff]
+dialect = snowflake
+# dbt-Templater, damit {{ ref() }}/{{ source() }} korrekt aufgeloest werden.
+# Voraussetzung: dbt + Profil vorhanden. Ohne dbt-Setup auf "jinja" umstellen.
+templater = dbt
+max_line_length = 120
+exclude_rules = None
+
+[sqlfluff:templater:dbt]
+project_dir = .
+
+[sqlfluff:rules:capitalisation.keywords]
+capitalisation_policy = lower
+
+[sqlfluff:rules:capitalisation.identifiers]
+extended_capitalisation_policy = upper

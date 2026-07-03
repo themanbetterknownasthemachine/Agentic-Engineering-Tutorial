@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: mart_example__orders_daily
+    description: "Beispiel-Mart: Bestellungen pro Tag."
+    columns:
+      - name: ORDER_DATE
+        description: "Kalendertag (Schluessel des Marts)."
+        tests:
+          - unique
+          - not_null

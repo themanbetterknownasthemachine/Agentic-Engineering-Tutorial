@@ -1,0 +1,17 @@
+# Vorlage fuer ~/.dbt/profiles.yml (oder Projekt-Root, dann .gitignore beachten).
+# Key-Pair-Auth (snowflake_jwt); niemals Passwoerter oder Keys committen.
+# Werte kommen aus der Umgebung (siehe Beispiel-Umgebungsdatei im Repo-Root).
+bida_project:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
+      user: "{{ env_var('SNOWFLAKE_USER') }}"
+      authenticator: snowflake_jwt
+      private_key_path: "{{ env_var('SNOWFLAKE_PRIVATE_KEY_PATH') }}"
+      role: <YOUR_ROLE>
+      database: <YOUR_DATABASE>
+      warehouse: <YOUR_WAREHOUSE>
+      schema: DBT_BUT
+      threads: 4

@@ -1,0 +1,23 @@
+# Minimales, lauffaehiges dbt-Projekt. Pro Projekt anpassen: name, profile,
+# Materialisierungen. Die DWH-Domaene ist damit sofort startfaehig.
+name: "bida_project"
+version: "1.0.0"
+config-version: 2
+
+profile: "bida_project"
+
+model-paths: ["models"]
+macro-paths: ["macros"]
+seed-paths: ["seeds"]
+snapshot-paths: ["snapshots"]
+# Bewusst tests/dbt statt tests/: unter tests/ liegen die pytest-Suites.
+test-paths: ["tests/dbt"]
+
+clean-targets: ["target", "dbt_packages"]
+
+models:
+  bida_project:
+    staging:
+      +materialized: view
+    marts:
+      +materialized: table

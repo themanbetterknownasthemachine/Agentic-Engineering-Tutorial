@@ -1,0 +1,11 @@
+version: 2
+
+models:
+  - name: stg_example__orders
+    description: "Beispiel-Staging-Model (im echten Projekt aus einer Source ersetzen)."
+    columns:
+      - name: ORDER_ID
+        description: "Fachlicher Schluessel der Bestellung."
+        tests:
+          - unique
+          - not_null
