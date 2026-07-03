@@ -29,6 +29,14 @@ Jedes `eval/eval_<thema>.py` haelt sich an diese Regeln:
 
 ## Beispiele
 
+| Bereich       | Datei                        | Prueft                                     |
+|---------------|------------------------------|--------------------------------------------|
+| Forecast      | `eval_forecast.py`           | MAPE/Bias/negative Werte                   |
+| ML allgemein  | `eval_baseline_beat.py`      | Modell schlaegt Baseline + Quality-Bar     |
+
 - `examples/eval_forecast.py` - Forecast-Verifier (MAPE/Bias/negative Werte).
   Zeilen mit `y_true == 0` werden fuer die MAPE ausgeschlossen; bei vielen
   Nullern besser auf WAPE/sMAPE wechseln.
+- `examples/eval_baseline_beat.py` - generischer ML-Verifier: PASS nur, wenn das
+  Modell die Baseline schlaegt UND die Quality-Bar erfuellt (WAPE, robust gegen
+  `y_true == 0`). Liest Baseline- und Modell-Vorhersagen aus einer results-JSON.
