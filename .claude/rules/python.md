@@ -3,11 +3,10 @@ paths:
   - "**/*.py"
 ---
 
-# Python / forecasting rules
+# Python rules
 
-- Python 3.12, dependencies via uv. Format/lint with Ruff, type-check with mypy.
-- Forecasting: no feature leakage. Never use features unknown at prediction time.
-- Half-days (IS_HALBTAG) are statistically fragile (very few training rows):
-  always sanity-check sign and magnitude of coefficients, never trust them blindly.
-- Before deploying a forecast, the holdout must pass the project verifier `python eval/eval_<thema>.py`.
-- Prefer pandas/numpy vectorization; keep functions small and testable.
+- Python 3.12, dependencies via uv (`uv add` / `uv sync`; keep `uv.lock` committed).
+- Format/lint with Ruff, type-check with mypy; both must be green (`bash scripts/lint.sh`).
+- Prefer pandas/numpy vectorization over row-wise loops.
+- Keep functions small and testable; no I/O at module import time.
+- Configuration via environment variables, never hardcoded credentials or paths.

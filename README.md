@@ -68,7 +68,8 @@ Einen vollständigen Beispiel-Durchlauf von der Spec bis zur produktiven View, i
   Kontext geladen und überlebt `/compact`. Kurz halten (unter 200 Zeilen).
 - **.claude/rules/** - modulare Regeln. Dateien mit `paths`-Frontmatter laden nur, wenn Claude
   an passenden Dateien arbeitet (spart Kontext); Dateien ohne `paths` laden immer. Hier:
-  `sql.md` (dbt/SQL), `python.md` (Forecasting), `testing.md`, `security.md`.
+  `security.md` (immer), `python.md`, `forecasting.md`, `dbt-snowflake.md`, `oracle.md`,
+  `dax.md`, `airflow.md`, `testing.md` - je an ihre Domänen-Pfade gebunden.
 - **.claude/skills/** - wiederholbare Abläufe, je mit `/name` aufrufbar oder vom Modell bei
   Bedarf genutzt. Hier: `spec` (Interview zum Spec bauen), `criteria` (Evaluationskriterien),
   `review` (zweites Modell als Kritiker).
