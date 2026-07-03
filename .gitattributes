@@ -1,0 +1,9 @@
+# Shell-Skripte (Hooks, scripts/) muessen mit LF ausgecheckt werden,
+# sonst scheitert bash unter Windows/Git Bash an CRLF-Zeilenenden.
+* text=auto
+*.sh text eol=lf
+*.py text eol=lf
+*.sql text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.md text

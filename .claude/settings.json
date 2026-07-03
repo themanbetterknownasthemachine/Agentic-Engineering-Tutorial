@@ -30,7 +30,7 @@
       {
         "matcher": "Bash|Edit|Write",
         "hooks": [
-          { "type": "command", "command": ".claude/hooks/protect-files.sh" }
+          { "type": "command", "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/protect-files.sh\"" }
         ]
       }
     ],
@@ -38,7 +38,7 @@
       {
         "matcher": "Edit|Write",
         "hooks": [
-          { "type": "command", "command": ".claude/hooks/validate-changes.sh" }
+          { "type": "command", "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/validate-changes.sh\"" }
         ]
       }
     ]
