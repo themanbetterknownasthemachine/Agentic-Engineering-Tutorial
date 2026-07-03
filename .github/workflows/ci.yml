@@ -20,6 +20,9 @@ jobs:
       - name: Dependencies installieren
         run: uv sync
 
+      - name: Template-Platzhalter pruefen
+        run: bash scripts/check-template.sh
+
       - name: Ruff (Lint)
         run: uv run ruff check .
 

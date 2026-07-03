@@ -22,10 +22,14 @@ View findest du in [`docs/WORKFLOW.md`](docs/WORKFLOW.md).
 
 ## Pro Projekt anpassen (Checkliste)
 
-Beim Start eines neuen Projekts nur diese Dateien anfassen, der Rest des Skeletts bleibt unverändert:
+Beim Start eines neuen Projekts nur diese Dateien anfassen, der Rest des Skeletts bleibt unverändert.
+Empfohlen: `bash scripts/init-project.sh` (Wizard) fragt die Kernwerte ab, ersetzt die Platzhalter
+und entfernt den `.template`-Marker. Manuell geht es über die Checkliste:
 
 - [ ] **Domäne wählen**: `bash scripts/init-domain.sh <ml|de|dwh|pbi>` entfernt nicht
       benötigte Domänen-Ordner (siehe `docs/domain-setup/`)
+- [ ] **`.template` entfernen** (macht `init-project.sh` automatisch): erst ohne diesen Marker
+      erzwingt `check-template.sh` gefüllte Platzhalter
 - [ ] **AGENTS.md**: alle `<PLACEHOLDER>` füllen — `<PROJECT_NAME>`, `<STACK>`, Domänen-Tools,
       `<DEV_SCHEMA>`, Inferenz-Objektreferenz (`<INFERENCE_DB>.<INFERENCE_SCHEMA>.V_<PROJEKT>_*`),
       `<QUALITY_BAR>` (geteilte Quelle der Wahrheit; CLAUDE.md importiert sie)
@@ -53,9 +57,10 @@ Das machst du (oder ein Teammitglied) bei jedem neuen Projekt:
 
 1. Auf GitHub oben rechts "Use this template" klicken, ein neues Repo anlegen und klonen.
    (Ohne GitHub: den Template-Ordner kopieren und umbenennen.)
-2. Domäne wählen (`bash scripts/init-domain.sh <ml|de|dwh|pbi>`) und die Dateien aus der
-   Checkliste oben anpassen: `AGENTS.md` (Kern), `CLAUDE.md`, `.env` (aus `.env.example`),
-   `.mcp.json` und optional `README.md` / `docs/architecture.md`.
+2. `bash scripts/init-project.sh` (Setup-Wizard) laufen lassen — füllt Platzhalter und
+   entfernt `.template`. Danach Domäne wählen (`bash scripts/init-domain.sh <ml|de|dwh|pbi>`)
+   und Rest der Checkliste (`.env`, `.mcp.json`, optional Docs). `bash scripts/check-template.sh`
+   bestätigt, dass keine Platzhalter offen sind.
 3. `claude` im Projekt-Root starten. Mit `/memory` prüfen, welche Dateien geladen sind, und
    optional `/init` laufen lassen, um die `CLAUDE.md` aus dem echten Code zu verfeinern.
 4. `/spec` laufen lassen, kleine abgegrenzte Spec nach `docs/specs/active/`.
