@@ -1,7 +1,7 @@
 # Architecture
 
 > TODO: Architektur dieses Projekts beschreiben (Data Vault Layer, Schemas, Modell-Fluss,
-> Forecast-Pipeline, Power-BI-Konsum). Von AGENTS.md referenziert. `<PLACEHOLDER>` füllen.
+> Forecast-Pipeline, Power-BI-Konsum). Von CLAUDE.md referenziert. `<PLACEHOLDER>` füllen.
 
 ## Schichten
 - Raw Vault -> Business Vault -> Gold / Marts (Snowflake, Data Vault 2.0)

@@ -3,4 +3,4 @@ This file marks the repository as the UNCONFIGURED starter template.
 While it exists, scripts/check-template.sh treats open <PLACEHOLDER> values as
 expected and passes. Starting a real project removes this marker (manually or via
 scripts/init-project.sh); from then on check-template.sh enforces that no
-placeholders remain in CLAUDE.md, AGENTS.md, and .mcp.json.
+placeholders remain in CLAUDE.md and .mcp.json.

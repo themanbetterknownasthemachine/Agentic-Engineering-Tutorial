@@ -30,10 +30,9 @@ und entfernt den `.template`-Marker. Manuell geht es über die Checkliste:
       benötigte Domänen-Ordner (siehe `docs/domain-setup/`)
 - [ ] **`.template` entfernen** (macht `init-project.sh` automatisch): erst ohne diesen Marker
       erzwingt `check-template.sh` gefüllte Platzhalter
-- [ ] **AGENTS.md**: alle `<PLACEHOLDER>` füllen — `<PROJECT_NAME>`, `<STACK>`, Domänen-Tools,
-      `<DEV_SCHEMA>`, Inferenz-Objektreferenz (`<INFERENCE_DB>.<INFERENCE_SCHEMA>.V_<PROJEKT>_*`),
-      `<QUALITY_BAR>` (geteilte Quelle der Wahrheit; CLAUDE.md importiert sie)
-- [ ] **CLAUDE.md**: `<PROJECT_NAME>`, `<STACK>` und Beschreibung ersetzen (Kern liegt in AGENTS.md)
+- [ ] **CLAUDE.md**: alle `<PLACEHOLDER>` füllen — `<PROJECT_NAME>`, Beschreibung, `<STACK>`,
+      Domänen-Tools, `<DEV_SCHEMA>`, Inferenz-Objektreferenz
+      (`<INFERENCE_DB>.<INFERENCE_SCHEMA>.V_<PROJEKT>_*`), `<QUALITY_BAR>`
 - [ ] **Prüfen**: `bash scripts/check-template.sh` muss ohne offene Platzhalter durchlaufen
 - [ ] **.env**: aus `.env.example` kopieren und Werte eintragen (wird nie committet)
 - [ ] **.mcp.json**: Platzhalter `REPLACE_WITH_YOUR_SNOWFLAKE_MCP_COMMAND` durch den echten Snowflake-MCP-Befehl ersetzen
@@ -93,8 +92,6 @@ Einen vollständigen Beispiel-Durchlauf von der Spec bis zur produktiven View, i
   (Exit-Code 2), der Zugriffe auf Credential-Dateien und destruktives SQL im Ausführungskontext
   blockt (Details und Zwei-Schichten-Logik: `.claude/rules/security.md`). `validate-changes.sh`
   ist ein PostToolUse-Hook, der nach Edits Ruff bzw. sqlfluff laufen lässt.
-- **AGENTS.md** - geteilter Kern-Kontext für alle Coding-Agents (auch Codex/VS-Code).
-  CLAUDE.md importiert ihn per `@AGENTS.md` (eine Quelle der Wahrheit).
 - **.mcp.json** - geteilte MCP-Server (Snowflake, GitHub). Nur env-Referenzen, keine Secrets.
 - **docs/** - `architecture.md`, `adr/`, `specs/active` und `specs/completed`, `runbooks/`,
   `domain-setup/` (pro Domäne behalten/löschen) und `contracts/` (Data-Contracts-Vorlage).

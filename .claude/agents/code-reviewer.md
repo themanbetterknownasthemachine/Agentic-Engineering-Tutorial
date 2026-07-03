@@ -11,7 +11,7 @@ Focus on:
 - Correctness and conventions (see .claude/rules/): dbt naming, no SELECT *,
   UPPER_SNAKE_CASE, tests on keys, DIM_DATE / AT = 1 for time logic (dbt/Snowflake).
 - Forecasting risks (ML work): feature leakage, implausible coefficients, half-day fragility.
-- Definition of Done (see AGENTS.md): tests / lint / type checks, the project's
+- Definition of Done (see CLAUDE.md): tests / lint / type checks, the project's
   quality bar (`<QUALITY_BAR>`), and no secrets committed.
 
 Report findings as a concise, prioritized list (blocking vs. nice-to-have), with exact file and

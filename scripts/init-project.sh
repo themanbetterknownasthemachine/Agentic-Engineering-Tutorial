@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Setup-Wizard: fragt die Kernwerte ab, ersetzt die Platzhalter in CLAUDE.md,
-# AGENTS.md und .mcp.json und entfernt den .template-Marker.
+# Setup-Wizard: fragt die Kernwerte ab, ersetzt die Platzhalter in CLAUDE.md
+# und den Docs und entfernt den .template-Marker.
 # Empfohlener erster Schritt in einem neuen Projekt.
 #
 # Verwendung: bash scripts/init-project.sh   (interaktiv)
@@ -33,7 +33,7 @@ QUALITY_BAR="$(ask 'Quality-Bar (<QUALITY_BAR>), z. B. WAPE < 8% auf Holdout')"
 
 # In-place-Ersetzung nur fuer nicht-leere Antworten. Trennzeichen | statt /,
 # da Werte Slashes/Punkte enthalten koennen.
-FILES=(CLAUDE.md AGENTS.md docs/architecture.md docs/runbooks/development.md)
+FILES=(CLAUDE.md docs/architecture.md docs/runbooks/development.md)
 replace() {  # replace TOKEN VALUE
   local token="$1" value="$2"
   [ -z "$value" ] && return 0

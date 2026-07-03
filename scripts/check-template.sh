@@ -13,7 +13,7 @@ if [ -f .template ]; then
   exit 0
 fi
 
-FILES=(CLAUDE.md AGENTS.md .mcp.json)
+FILES=(CLAUDE.md .mcp.json)
 
 # Konkrete Fill-in-Tokens (bewusst NICHT das generische Wort PLACEHOLDER,
 # damit erklaerender Text nicht faelschlich anschlaegt).

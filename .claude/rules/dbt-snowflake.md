@@ -11,7 +11,7 @@ paths:
 # dbt / Snowflake rules
 
 Firm-stable conventions (identical across Pistor dbt/Snowflake projects). They live
-here, not in AGENTS.md/CLAUDE.md, so they load path-bound and stay project-independent.
+here, not in CLAUDE.md, so they load path-bound and stay project-independent.
 
 ## Tooling
 - dbt CLI is `dbtf` (Pistor wrapper): `dbtf build`, `dbtf test`, `dbtf run-operation`.
