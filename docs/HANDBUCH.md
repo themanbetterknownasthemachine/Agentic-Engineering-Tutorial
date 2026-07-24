@@ -245,7 +245,8 @@ Env-Referenzen (`${VAR}`), **niemals Secrets**.
 |---|---|
 | [`WORKFLOW.md`](WORKFLOW.md) | Durchgespielter Beispiel-Durchlauf vom leeren Repo zur produktiven View (illustrativer Forecast). |
 | `HANDBUCH.md` | **Dieses Dokument.** |
-| [`architecture.md`](architecture.md) | Projektspezifische Architektur (Schichten, Modell-Fluss). Enthält TODO/`<PLACEHOLDER>`, pro Projekt füllen. |
+| [`datenarchitektur.md`](datenarchitektur.md) | **Firmweite** Referenz: das Pistor-Schichtenmodell (Data Vault 2.0: Landing → Vault → Consumption → Tabular → Report) + Namenskonventionen. In jedem DWH-Projekt gleich; das knappe Pendant für Claude steht in [`dbt-snowflake.md`](../.claude/rules/dbt-snowflake.md). |
+| [`architecture.md`](architecture.md) | **Projektspezifische** Architektur: was *dieses* Projekt im firmweiten Modell tut. Enthält TODO/`<PLACEHOLDER>`, pro Projekt füllen. |
 | `adr/` | **Architecture Decision Records.** [`0001`](adr/0001-record-architecture-decisions.md) etabliert das Muster: jede grössere Entscheidung als nummerierte Datei (Kontext, Entscheidung, Konsequenzen). |
 | `specs/active/` | Laufende Specs (aus `/spec`). |
 | `specs/completed/` | Abgeschlossene Specs (via `/handover` verschoben). |
