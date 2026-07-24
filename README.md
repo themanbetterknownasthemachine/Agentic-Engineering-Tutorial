@@ -31,8 +31,9 @@ View findest du in [`docs/WORKFLOW.md`](docs/WORKFLOW.md).
 ## Pro Projekt anpassen (Checkliste)
 
 Beim Start eines neuen Projekts nur diese Dateien anfassen, der Rest des Skeletts bleibt unverändert.
-Empfohlen: `bash scripts/init-project.sh` (Wizard) fragt die Kernwerte ab, ersetzt die Platzhalter
-und entfernt den `.template`-Marker. Manuell geht es über die Checkliste:
+Empfohlen: `bash scripts/init-project.sh` (Wizard) fragt die Kernwerte ab, ersetzt die Platzhalter,
+generiert eine schlanke Projekt-README, entfernt Template-Einführungsmaterial (`docs/rollout/`)
+und den `.template`-Marker. Manuell geht es über die Checkliste:
 
 - [ ] **Domäne wählen**: `bash scripts/init-domain.sh <ml|de|dwh>` entfernt nicht
       benötigte Domänen-Ordner (siehe `docs/domain-setup/`)
@@ -45,7 +46,8 @@ und entfernt den `.template`-Marker. Manuell geht es über die Checkliste:
 - [ ] **Prüfen**: `bash scripts/check-template.sh` muss ohne offene Platzhalter durchlaufen
 - [ ] **.env**: aus `.env.example` kopieren und Werte eintragen (wird nie committet)
 - [ ] **.mcp.json**: Platzhalter `REPLACE_WITH_YOUR_SNOWFLAKE_MCP_COMMAND` durch den echten Snowflake-MCP-Befehl ersetzen
-- [ ] **README.md / docs/architecture.md**: optional an das konkrete Projekt anpassen
+- [ ] **README.md**: generiert der Wizard neu; bei manuellem Setup selbst auf das Projekt
+      anpassen. **docs/architecture.md**: optional an das konkrete Projekt anpassen
 
 Unverändert bleiben: `.claude/rules/`, `.claude/skills/`, `.claude/agents/`, `.claude/hooks/`, `.claude/settings.json`, `scripts/` und `.gitignore`.
 
@@ -65,8 +67,9 @@ Das machst du (oder ein Teammitglied) bei jedem neuen Projekt:
 
 1. Auf GitHub oben rechts "Use this template" klicken, ein neues Repo anlegen und klonen.
    (Ohne GitHub: den Template-Ordner kopieren und umbenennen.)
-2. `bash scripts/init-project.sh` (Setup-Wizard) laufen lassen — füllt Platzhalter und
-   entfernt `.template`. Danach Domäne wählen (`bash scripts/init-domain.sh <ml|de|dwh>`)
+2. `bash scripts/init-project.sh` (Setup-Wizard) laufen lassen — füllt Platzhalter, generiert
+   die Projekt-README und entfernt `docs/rollout/` sowie `.template`. Danach Domäne wählen
+   (`bash scripts/init-domain.sh <ml|de|dwh>`)
    und Rest der Checkliste (`.env`, `.mcp.json`, optional Docs). `bash scripts/check-template.sh`
    bestätigt, dass keine Platzhalter offen sind.
 3. `claude` im Projekt-Root starten. Mit `/memory` prüfen, welche Dateien geladen sind, und
@@ -80,6 +83,9 @@ Das machst du (oder ein Teammitglied) bei jedem neuen Projekt:
 Einen vollständigen Beispiel-Durchlauf von der Spec bis zur produktiven View, inklusive einer
 `/spec`-Session, einer Beispiel-Spec und einem Eval-Skript, findest du in
 [`docs/WORKFLOW.md`](docs/WORKFLOW.md).
+
+Ein vollständiges Handbuch — Konzept, Lebenszyklus und eine Datei-für-Datei-Referenz zum
+Nachschlagen — findest du in [`docs/HANDBUCH.md`](docs/HANDBUCH.md).
 
 ## Struktur und was jeder Baustein tut
 
