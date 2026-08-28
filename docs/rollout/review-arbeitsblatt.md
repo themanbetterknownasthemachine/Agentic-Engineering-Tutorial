@@ -1,7 +1,7 @@
 # Phase B — Review-Arbeitsblatt: Regeln & Leitplanken härten
 
 Arbeitsgrundlage für die Domänen-Werkstätten. Ziel: aus den mitgelieferten **Beispiel**-Regeln
-verbindliche Pistor-Regeln machen und im Template verankern (Definition of Done #2 des Jira-Tasks).
+verbindliche Pistor-Regeln machen und im Template verankern.
 
 **So benutzt du dieses Blatt:** Jede Zeile ist eine Entscheidung. Spalten:
 - **Was** — die Regel / die zu treffende Entscheidung

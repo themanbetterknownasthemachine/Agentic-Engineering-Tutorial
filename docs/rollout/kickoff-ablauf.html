@@ -1,0 +1,998 @@
+<title>Kickoff-Ablauf</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500;0,600;1,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --paper: #f5f4ef;
+    --paper-raised: #ecebe3;
+    --ink: #1c1b18;
+    --ink-soft: #55523f;
+    --ink-faint: #8a8672;
+    --accent: #24466b;
+    --accent-ink: #16324f;
+    --accent-soft: #e4ecf3;
+    --amber: #a3611f;
+    --amber-soft: #f3e6d3;
+    --rule: rgba(28, 27, 24, 0.14);
+    --rule-strong: rgba(28, 27, 24, 0.26);
+    --pass: #2e7d4f;
+    --pass-soft: #dceee1;
+    --fail: #a83a29;
+    --fail-soft: #f6dfd9;
+    --code-bg: #1b2430;
+    --code-ink: #dfe8ef;
+    --code-accent: #8fb6dd;
+    --shadow: 0 1px 2px rgba(28, 27, 24, 0.06), 0 8px 24px rgba(28, 27, 24, 0.06);
+    --font-display: "Newsreader", Georgia, "Times New Roman", serif;
+    --font-body: "IBM Plex Sans", -apple-system, "Segoe UI", sans-serif;
+    --font-mono: "IBM Plex Mono", "Courier New", monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #14171b;
+      --paper-raised: #1b1f24;
+      --ink: #eae7dd;
+      --ink-soft: #b6b2a2;
+      --ink-faint: #7c7969;
+      --accent: #86adda;
+      --accent-ink: #bcd6f2;
+      --accent-soft: rgba(134, 173, 218, 0.14);
+      --amber: #e2a862;
+      --amber-soft: rgba(226, 168, 98, 0.14);
+      --rule: rgba(234, 231, 221, 0.14);
+      --rule-strong: rgba(234, 231, 221, 0.26);
+      --pass: #6cc590;
+      --pass-soft: rgba(108, 197, 144, 0.14);
+      --fail: #e37c64;
+      --fail-soft: rgba(227, 124, 100, 0.14);
+      --code-bg: #0f141a;
+      --code-ink: #dfe8ef;
+      --code-accent: #8fb6dd;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.35);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper: #14171b;
+    --paper-raised: #1b1f24;
+    --ink: #eae7dd;
+    --ink-soft: #b6b2a2;
+    --ink-faint: #7c7969;
+    --accent: #86adda;
+    --accent-ink: #bcd6f2;
+    --accent-soft: rgba(134, 173, 218, 0.14);
+    --amber: #e2a862;
+    --amber-soft: rgba(226, 168, 98, 0.14);
+    --rule: rgba(234, 231, 221, 0.14);
+    --rule-strong: rgba(234, 231, 221, 0.26);
+    --pass: #6cc590;
+    --pass-soft: rgba(108, 197, 144, 0.14);
+    --fail: #e37c64;
+    --fail-soft: rgba(227, 124, 100, 0.14);
+    --code-bg: #0f141a;
+    --code-ink: #dfe8ef;
+    --code-accent: #8fb6dd;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.35);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16.5px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection { background: var(--accent-soft); color: var(--ink); }
+
+  a { color: var(--accent); }
+  a:focus-visible, button:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; text-wrap: balance; }
+
+  code, .mono { font-family: var(--font-mono); }
+
+  /* ---------- Shell layout ---------- */
+  .shell {
+    display: grid;
+    grid-template-columns: 280px minmax(0, 1fr);
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 900px) {
+    .shell { grid-template-columns: 1fr; }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    padding: 4.5rem 2rem 3rem;
+    max-width: 1180px;
+    margin: 0 auto;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .hero__eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--amber);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .hero__eyebrow::before {
+    content: "";
+    width: 1.6rem;
+    height: 1px;
+    background: var(--amber);
+  }
+
+  .hero h1 {
+    font-size: clamp(2.1rem, 4vw, 3.1rem);
+    line-height: 1.08;
+    margin: 0.9rem 0 0.75rem;
+    max-width: 22ch;
+  }
+
+  .hero h1 em { color: var(--accent); font-style: italic; }
+
+  .hero p.lede {
+    max-width: 62ch;
+    color: var(--ink-soft);
+    font-size: 1.08rem;
+    margin: 0 0 1.8rem;
+  }
+
+  .hero__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem 0.9rem;
+  }
+
+  .pill {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.01em;
+    border: 1px solid var(--rule-strong);
+    border-radius: 999px;
+    padding: 0.32rem 0.8rem;
+    color: var(--ink-soft);
+    background: var(--paper-raised);
+    white-space: nowrap;
+  }
+
+  .pill strong { color: var(--ink); font-weight: 600; }
+
+  /* ---------- Sidebar / TOC ---------- */
+  .toc-toggle {
+    display: none;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    background: var(--paper-raised);
+    border: 1px solid var(--rule-strong);
+    color: var(--ink);
+    padding: 0.6rem 1rem;
+    margin: 1rem 2rem 0;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  @media (max-width: 900px) {
+    .toc-toggle { display: inline-flex; align-items: center; gap: 0.5rem; }
+  }
+
+  nav.toc {
+    position: sticky;
+    top: 0;
+    align-self: start;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 2.5rem 1.4rem 3rem 2rem;
+    border-right: 1px solid var(--rule);
+    scrollbar-width: thin;
+  }
+
+  @media (max-width: 900px) {
+    nav.toc {
+      position: static;
+      height: auto;
+      display: none;
+      border-right: none;
+      border-bottom: 1px solid var(--rule);
+      padding: 0.5rem 2rem 1.5rem;
+    }
+    nav.toc.open { display: block; }
+  }
+
+  .toc-group + .toc-group { margin-top: 1.6rem; }
+
+  .toc-group__label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0 0 0.6rem;
+  }
+
+  .toc-group ul { list-style: none; margin: 0; padding: 0; }
+
+  .toc-group a {
+    display: block;
+    text-decoration: none;
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    padding: 0.32rem 0 0.32rem 0.7rem;
+    border-left: 2px solid transparent;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .toc-group a .t {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--ink-faint);
+    margin-left: 0.5rem;
+  }
+
+  .toc-group a:hover { color: var(--ink); }
+
+  .toc-group a.active {
+    color: var(--accent);
+    border-left-color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* ---------- Main content ---------- */
+  main { padding: 3rem 2.5rem 6rem; min-width: 0; }
+
+  .measure { max-width: 700px; }
+
+  section.block { margin-bottom: 3.2rem; scroll-margin-top: 1.5rem; }
+
+  .phase-divider {
+    margin: 4.5rem 0 3rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--rule-strong);
+  }
+
+  .phase-divider .kicker {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--amber);
+  }
+
+  .phase-divider h2 {
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    margin: 0.5rem 0 0.8rem;
+  }
+
+  .phase-divider p { color: var(--ink-soft); max-width: 62ch; }
+
+  .step-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.9rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .step-num {
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+  }
+
+  h2.step-title { font-size: 1.5rem; margin: 0; }
+  h3 { font-size: 1.18rem; margin: 1.6rem 0 0.6rem; }
+
+  .time-badge {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.03em;
+    color: var(--ink-soft);
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    padding: 0.18rem 0.65rem;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  p { margin: 0 0 1.05rem; }
+  .measure p, .measure li { color: var(--ink-soft); }
+  .measure strong { color: var(--ink); }
+
+  ul, ol { padding-left: 1.3rem; margin: 0 0 1.05rem; }
+  li { margin-bottom: 0.35rem; }
+
+  /* ---------- Tables ---------- */
+  .table-wrap { overflow-x: auto; margin: 1.2rem 0 1.6rem; border: 1px solid var(--rule); border-radius: 10px; }
+
+  table { border-collapse: collapse; width: 100%; font-size: 0.94rem; min-width: 480px; }
+
+  th, td { text-align: left; padding: 0.6rem 0.9rem; border-bottom: 1px solid var(--rule); vertical-align: top; }
+
+  thead th {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    background: var(--paper-raised);
+    white-space: nowrap;
+  }
+
+  tbody tr:last-child td { border-bottom: none; }
+  td.t, td.mono { font-family: var(--font-mono); font-size: 0.86rem; font-variant-numeric: tabular-nums; color: var(--ink-soft); }
+
+  /* ---------- Callouts ---------- */
+  .why {
+    border-left: 3px solid var(--amber);
+    background: var(--amber-soft);
+    padding: 0.85rem 1.1rem;
+    border-radius: 0 8px 8px 0;
+    margin: 1.1rem 0 1.5rem;
+  }
+
+  .why .label {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--amber);
+    display: block;
+    margin-bottom: 0.35rem;
+  }
+
+  .why p { margin: 0; color: var(--ink); }
+
+  blockquote.pull {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.3rem;
+    line-height: 1.45;
+    color: var(--ink);
+    border-left: 3px solid var(--accent);
+    padding: 0.3rem 0 0.3rem 1.3rem;
+    margin: 1.8rem 0;
+    max-width: 56ch;
+  }
+
+  /* ---------- Code ---------- */
+  pre {
+    background: var(--code-bg);
+    color: var(--code-ink);
+    border-radius: 10px;
+    padding: 1rem 1.15rem;
+    overflow-x: auto;
+    font-size: 0.86rem;
+    line-height: 1.6;
+    margin: 1rem 0 1.5rem;
+    box-shadow: var(--shadow);
+  }
+
+  pre code { font-family: var(--font-mono); }
+  code.cmd { background: var(--accent-soft); color: var(--accent-ink); padding: 0.1rem 0.4rem; border-radius: 5px; font-size: 0.88em; }
+  .code-caption {
+    font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink-faint);
+    margin: -1rem 0 1.5rem; letter-spacing: 0.02em;
+  }
+
+  /* Transcript / speaker script */
+  .transcript { border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; margin: 1.1rem 0 1.6rem; }
+  .transcript .line { display: grid; grid-template-columns: 88px 1fr; gap: 0.9rem; padding: 0.8rem 1rem; }
+  .transcript .line + .line { border-top: 1px solid var(--rule); }
+  .transcript .who { font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-faint); padding-top: 0.15rem; }
+  .transcript .line.you { background: var(--paper-raised); }
+  .transcript .line.you .who { color: var(--amber); }
+  .transcript .line.claude .who { color: var(--accent); }
+
+  /* Status pill (PASS/FAIL motif) */
+  .status { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--font-mono); font-size: 0.78rem; font-weight: 500; padding: 0.2rem 0.65rem; border-radius: 999px; }
+  .status.pass { background: var(--pass-soft); color: var(--pass); }
+  .status.fail { background: var(--fail-soft); color: var(--fail); }
+  .status::before { content: ""; width: 0.45rem; height: 0.45rem; border-radius: 50%; background: currentColor; }
+
+  /* Artifact cards (skill/subagent) */
+  .artifact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; margin: 1.3rem 0 1.6rem; }
+  @media (max-width: 640px) { .artifact-grid { grid-template-columns: 1fr; } }
+
+  .artifact-card {
+    border: 1px solid var(--rule-strong);
+    border-radius: 12px;
+    padding: 1.1rem 1.2rem;
+    background: var(--paper-raised);
+  }
+
+  .artifact-card .kind {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .artifact-card h4 { margin: 0.3rem 0 0.5rem; font-size: 1.05rem; font-family: var(--font-mono); color: var(--accent); }
+  .artifact-card p { font-size: 0.92rem; color: var(--ink-soft); margin: 0; }
+
+  /* Agenda overview strip */
+  .agenda-strip { display: flex; flex-direction: column; border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; margin: 1.5rem 0 2rem; }
+  .agenda-strip .row { display: grid; grid-template-columns: 84px 1fr auto; gap: 1rem; align-items: center; padding: 0.75rem 1.1rem; }
+  .agenda-strip .row + .row { border-top: 1px solid var(--rule); }
+  .agenda-strip .row .time { font-family: var(--font-mono); font-size: 0.82rem; color: var(--ink-faint); font-variant-numeric: tabular-nums; }
+  .agenda-strip .row .name { font-weight: 500; }
+  .agenda-strip .row .goal { color: var(--ink-faint); font-size: 0.85rem; text-align: right; display: none; }
+  @media (min-width: 640px) { .agenda-strip .row { grid-template-columns: 84px 1fr 1fr; } .agenda-strip .row .goal { display: block; } }
+
+  /* Resources / closing */
+  .resources { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.9rem; margin: 1.4rem 0 1rem; }
+  .resource {
+    display: block;
+    border: 1px solid var(--rule-strong);
+    border-radius: 10px;
+    padding: 0.9rem 1.05rem;
+    text-decoration: none;
+    color: var(--ink);
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .resource:hover { border-color: var(--accent); }
+  .resource .file { font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent); display: block; margin-bottom: 0.3rem; }
+  .resource .desc { font-size: 0.86rem; color: var(--ink-soft); }
+
+  footer.page-end {
+    max-width: 1180px; margin: 0 auto; padding: 2.5rem 2.5rem 4rem;
+    border-top: 1px solid var(--rule); color: var(--ink-faint); font-size: 0.85rem;
+  }
+
+  hr.thin { border: none; border-top: 1px solid var(--rule); margin: 2.2rem 0; }
+</style>
+
+<div class="hero">
+  <div class="hero__eyebrow">Agentic Engineering Starter Template &middot; zum Selbermachen</div>
+  <h1>Bau deinen ersten <em>Skill</em>, Subagent und Plugin für Claude Code</h1>
+  <p class="lede">
+    Diese Seite begleitet dich Schritt für Schritt: du richtest dein Projekt ein, lernst die
+    Grundbausteine kennen und baust am Ende drei eigene, sofort einsetzbare Werkzeuge &mdash;
+    an einem kleinen, ungefährlichen Übungsfall, den du selbst durchspielst.
+  </p>
+  <div class="hero__meta">
+    <span class="pill"><strong>~1 Std 55 Min</strong> gesamt, in 13 Schritten</span>
+    <span class="pill">Du brauchst: Claude Code + dieses Repo</span>
+    <span class="pill">Kein Vorwissen nötig</span>
+  </div>
+</div>
+
+<button class="toc-toggle" id="tocToggle" aria-expanded="false" aria-controls="tocNav">&#9776; Inhalt</button>
+
+<div class="shell">
+  <nav class="toc" id="tocNav" aria-label="Inhaltsverzeichnis">
+    <div class="toc-group">
+      <p class="toc-group__label">Los geht's</p>
+      <ul>
+        <li><a href="#grundidee" data-nav>1. Die Grundidee</a></li>
+        <li><a href="#setup" data-nav>2. Setup</a></li>
+      </ul>
+    </div>
+    <div class="toc-group">
+      <p class="toc-group__label">Erster Kontakt</p>
+      <ul>
+        <li><a href="#was-ist-claude-code" data-nav>3. Was ist Claude Code?</a></li>
+        <li><a href="#claude-md" data-nav>4. Deine CLAUDE.md</a></li>
+        <li><a href="#was-ist-skill" data-nav>5. Was ist ein Skill?</a></li>
+      </ul>
+    </div>
+    <div class="toc-group">
+      <p class="toc-group__label">Skill, Subagent, Plugin</p>
+      <ul>
+        <li><a href="#ohne-skill" data-nav>6. Claude ohne Skill</a></li>
+        <li><a href="#skill-bauen" data-nav>7. Skill bauen</a></li>
+        <li><a href="#was-ist-subagent" data-nav>8. Was ist ein Subagent?</a></li>
+        <li><a href="#subagent-bauen" data-nav>9. Subagent bauen</a></li>
+        <li><a href="#was-ist-plugin" data-nav>10. Was ist ein Plugin?</a></li>
+        <li><a href="#plugin-bauen" data-nav>11. Plugin bauen</a></li>
+      </ul>
+    </div>
+    <div class="toc-group">
+      <p class="toc-group__label">Alles zusammen</p>
+      <ul>
+        <li><a href="#alles-zusammen" data-nav>12. Dein nächstes Projekt</a></li>
+        <li><a href="#reflexion" data-nav>13. Reflexion</a></li>
+        <li><a href="#ressourcen" data-nav>Ressourcen</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+
+    <div class="agenda-strip">
+      <div class="row"><span class="time">5&prime;</span><span class="name">1. Die Grundidee</span><span class="goal">Bevor du irgendetwas baust</span></div>
+      <div class="row"><span class="time">5&prime;</span><span class="name">2. Setup</span><span class="goal">Dein eigenes Projekt aufsetzen</span></div>
+      <div class="row"><span class="time">5&prime;</span><span class="name">3. Was ist Claude Code?</span><span class="goal">Agent statt Chatbot</span></div>
+      <div class="row"><span class="time">5&prime;</span><span class="name">4. Deine CLAUDE.md</span><span class="goal">Dein dauerhafter Kontext</span></div>
+      <div class="row"><span class="time">5&prime;</span><span class="name">5. Was ist ein Skill?</span><span class="goal">Wiederverwendbarer Ablauf</span></div>
+      <div class="row"><span class="time">10&prime;</span><span class="name">6. Claude ohne Skill</span><span class="goal">Ein dbt-Modell von Hand</span></div>
+      <div class="row"><span class="time">15&prime;</span><span class="name">7. Skill bauen</span><span class="goal">/new-dbt-model, live</span></div>
+      <div class="row"><span class="time">5&prime;</span><span class="name">8. Was ist ein Subagent?</span><span class="goal">Isolierter Kontext</span></div>
+      <div class="row"><span class="time">15&prime;</span><span class="name">9. Subagent bauen</span><span class="goal">dbt-naming-reviewer</span></div>
+      <div class="row"><span class="time">5&prime;</span><span class="name">10. Was ist ein Plugin?</span><span class="goal">Teilbares Paket</span></div>
+      <div class="row"><span class="time">15&prime;</span><span class="name">11. Plugin bauen</span><span class="goal">Skill + Subagent verpacken</span></div>
+      <div class="row"><span class="time">20&prime;</span><span class="name">12. Dein nächstes Projekt</span><span class="goal">Spec, Verifier, Loop</span></div>
+      <div class="row"><span class="time">5&prime;</span><span class="name">13. Reflexion</span><span class="goal">Was du mitnimmst</span></div>
+    </div>
+
+    <section class="block measure" id="grundidee">
+      <div class="step-head"><span class="step-num">01</span><h2 class="step-title">Die Grundidee</h2><span class="time-badge">5 Min</span></div>
+
+      <p><strong>Worum geht's hier eigentlich?</strong> Um das BIDA Claude Code
+        Projekt-Template: ein push-fertiges Skelett, mit dem du ein neues Projekt so
+        aufsetzt, dass du Claude Code (Agentic Engineering) optimal nutzen kannst. Es folgt
+        einer sauberen, konventionellen Softwarestruktur und ergänzt sie um den
+        <code class="cmd">.claude</code>-Ordner mit Kontext, Regeln, Skills, Subagents und
+        Leitplanken. Genau diese Bausteine lernst du auf dieser Seite kennen &mdash; indem
+        du sie selbst benutzt und baust, nicht nur liest.</p>
+
+      <blockquote class="pull">
+        Erst sagst du, was gebaut werden soll (Spec) und woran man Erfolg misst (Verifier)
+        &mdash; dann baut Claude den Code in einer Schleife, bis das Erfolgssignal grün ist.
+      </blockquote>
+
+      <p>Das ist der einzige Satz, den du dir merken musst, bevor du loslegst. Alles andere
+        auf dieser Seite ist nur die praktische Umsetzung davon.</p>
+
+      <p>Du behältst drei Dinge: die Spec (was soll besser werden?), die finale Bewertung
+        (ist es wirklich fertig?) und das Verständnis (was passiert da fachlich?). Claude
+        behält eine Sache: die Implementierung in der Schleife &mdash; Code schreiben, testen,
+        Fehler lesen, korrigieren, wiederholen.</p>
+
+      <p>In den nächsten knapp zwei Stunden baust du das Handwerkszeug dafür: du richtest
+        dein Projekt ein, baust dir einen eigenen Skill, einen eigenen Subagent und ein
+        eigenes Plugin, und am Ende siehst du genau, wie du damit dein nächstes echtes
+        BIDA-Projekt starten würdest.</p>
+    </section>
+
+    <section class="block measure" id="setup">
+      <div class="step-head"><span class="step-num">02</span><h2 class="step-title">Setup</h2><span class="time-badge">5 Min</span></div>
+      <p>Bevor irgendetwas Konzeptionelles kommt, richtest du dein eigenes Projekt ein.
+        Du arbeitest ab jetzt in deiner eigenen Kopie, nicht an einem fremden Beispiel.</p>
+
+      <pre><code>git clone https://github.com/themanbetterknownasthemachine/Agentic-Engineering-Tutorial.git
+cd Agentic-Engineering-Tutorial
+cp .env.example .env        # siehe unten, was hier reingehört
+uv sync                     # Abhängigkeiten installieren
+claude                      # Session im Projekt-Root starten</code></pre>
+
+      <p><strong>Was in <code class="cmd">.env</code> reingehört:</strong>
+        <code class="cmd">SNOWFLAKE_ACCOUNT</code>, <code class="cmd">SNOWFLAKE_USER</code>,
+        <code class="cmd">SNOWFLAKE_PRIVATE_KEY_PATH</code> (Zugangsdaten fürs Data
+        Warehouse) und <code class="cmd">GITHUB_TOKEN</code> (falls Claude für dich auf
+        GitHub zugreifen soll). Für die heutige Übung brauchst du <strong>keins davon</strong>
+        &mdash; wir arbeiten nur lokal mit einer CSV-Datei. Lass die Datei einfach leer.
+        <code class="cmd">.env</code> wird nie committet, das schützt <code class="cmd">.gitignore</code>.</p>
+
+      <p>Sobald die Session läuft, wirf kurz einen Blick in die Ordner:</p>
+      <ul>
+        <li><code class="cmd">CLAUDE.md</code> &mdash; dein dauerhafter Projektkontext</li>
+        <li><code class="cmd">.claude/rules/</code>, <code class="cmd">skills/</code>, <code class="cmd">agents/</code>, <code class="cmd">hooks/</code> &mdash; das steuert Claude</li>
+        <li><code class="cmd">docs/</code>, <code class="cmd">eval/</code> &mdash; Spezifikationen und Verifier</li>
+        <li><code class="cmd">models/</code> &mdash; zwei Beispiel-dbt-Modelle, mit denen du gleich arbeitest</li>
+      </ul>
+    </section>
+
+    <section class="block measure" id="was-ist-claude-code">
+      <div class="step-head"><span class="step-num">03</span><h2 class="step-title">Was ist Claude Code?</h2><span class="time-badge">5 Min</span></div>
+      <p>Du arbeitest hier nicht mit einem Chatbot, der dir eine Antwort schreibt. Claude Code
+        ist ein <strong>Agent</strong>: es liest Dateien, führt Befehle aus, sieht das
+        Ergebnis, und korrigiert sich selbst &mdash; in einer Schleife, bis eine Aufgabe
+        erledigt ist.</p>
+      <p>Tipp direkt zum Ausprobieren: führ in deiner Session <code class="cmd">/memory</code>
+        aus. Du siehst genau, welche Dateien gerade als Kontext geladen sind &mdash; das ist
+        das, was Claude über dein Projekt "weiss", ohne dass du es jedes Mal neu erklären
+        musst.</p>
+    </section>
+
+    <section class="block measure" id="claude-md">
+      <div class="step-head"><span class="step-num">04</span><h2 class="step-title">Deine CLAUDE.md</h2><span class="time-badge">5 Min</span></div>
+      <p>Öffne <code class="cmd">CLAUDE.md</code> und lies sie einmal ganz durch. Das ist der
+        dauerhafte Kontext, den Claude bei jeder Session automatisch bekommt.</p>
+      <p><strong>Was ist <code class="cmd">/compact</code>?</strong> Wird eine Session sehr
+        lang, wird der bisherige Gesprächsverlauf irgendwann zu gross für Claudes
+        Kontextfenster. <code class="cmd">/compact</code> fasst dann die älteren Teile des
+        Verlaufs zusammen, damit noch Platz für Neues bleibt &mdash; dabei geht Detailwissen
+        aus dem Gespräch verloren. <code class="cmd">CLAUDE.md</code> "überlebt" das, weil sie
+        nicht Teil des komprimierten Verlaufs ist, sondern bei jeder Session frisch neu
+        geladen wird. Deshalb steht hier nur das Wichtigste: Betriebsprinzip, Stack, Befehle,
+        nicht verhandelbare Regeln, Definition of Done.</p>
+      <p>Dir fallen Platzhalter wie <code class="cmd">&lt;PROJECT_NAME&gt;</code> oder
+        <code class="cmd">&lt;STACK&gt;</code> auf. Die sind bewusst noch offen &mdash; das
+        Tutorial-Repo ist der unberührte Template-Zustand. Bei einem echten Projekt füllst du
+        sie beim Setup aus (README, Abschnitt "Pro Projekt anpassen"); für die heutige Übung
+        lässt du sie einfach stehen, wir bauen an Werkzeugen, nicht an einem echten Projekt.</p>
+    </section>
+
+    <section class="block measure" id="was-ist-skill">
+      <div class="step-head"><span class="step-num">05</span><h2 class="step-title">Was ist ein Skill?</h2><span class="time-badge">5 Min</span></div>
+      <p>Ein Skill ist ein wiederverwendbarer Ablauf, den du per <code class="cmd">/name</code>
+        aufrufst &mdash; im gleichen Kontext wie deine laufende Session, nicht isoliert. Jeder
+        Skill besteht aus genau zwei Teilen:</p>
+      <ul>
+        <li><strong>YAML-Frontmatter</strong> &mdash; Metadaten: Name und Beschreibung, damit
+          Claude weiss, wann er den Skill von sich aus nutzen sollte.</li>
+        <li><strong>Markdown-Body</strong> &mdash; die eigentliche Anleitung, der Claude
+          Schritt für Schritt folgt.</li>
+      </ul>
+      <p>Schau dir ein bestehendes Beispiel an: <code class="cmd">.claude/skills/spec/SKILL.md</code>.
+        Du siehst genau diese zwei Teile: oben Name und Beschreibung zwischen
+        <code class="cmd">---</code>, darunter die Anleitung, die abläuft, sobald du
+        <code class="cmd">/spec</code> aufrufst.</p>
+      <p>Gleich baust du selbst einen &mdash; aber zuerst probierst du, wie es sich ohne
+        Skill anfühlt.</p>
+    </section>
+
+    <section class="block measure" id="ohne-skill">
+      <div class="step-head"><span class="step-num">06</span><h2 class="step-title">Claude ohne Skill</h2><span class="time-badge">10 Min</span></div>
+      <p>Im Ordner <code class="cmd">models/</code> liegen schon zwei Beispiel-Modelle:
+        <code class="cmd">models/staging/stg_example__orders.sql</code> und
+        <code class="cmd">models/marts/mart_example__orders_daily.sql</code>. Bitte Claude
+        direkt, ohne irgendeinen Skill zu benutzen, ein weiteres anzulegen:</p>
+      <pre><code>Leg models/staging/stg_toy__contacts.sql an, ein Staging-Modell für
+(fiktive) Kontaktdaten mit den Spalten KONTAKT_ID, NAME, EMAIL.
+Halte dich an unsere Namenskonvention aus .claude/rules/dbt-snowflake.md:
+stg_&lt;quelle&gt;__&lt;entity&gt;, UPPER_SNAKE_CASE-Spalten, kein SELECT *.
+Ergänze in schema.yml einen not_null- und unique-Test auf KONTAKT_ID.</code></pre>
+      <p>Das funktioniert &mdash; Claude kann das direkt. Aber: du musst jedes Mal die
+        Namenskonvention, die Test-Pflicht und den <code class="cmd">schema.yml</code>-Eintrag
+        selbst nennen. Genau diesen wiederkehrenden Handgriff automatisierst du jetzt.</p>
+      <div class="why">
+        <span class="label">Warum dieser Umweg</span>
+        <p>Ein Skill lohnt sich erst, wenn du den manuellen Weg einmal gespürt hast &mdash;
+          sonst wirkt er wie Magie statt wie eine Abkürzung für etwas, das du schon
+          verstehst.</p>
+      </div>
+    </section>
+
+    <section class="block measure" id="skill-bauen">
+      <div class="step-head"><span class="step-num">07</span><h2 class="step-title">Skill bauen: <code>/new-dbt-model</code></h2><span class="time-badge">15 Min</span></div>
+      <p>Jetzt baust du genau das, was du gerade manuell gemacht hast, als wiederverwendbaren
+        Skill. Du schreibst die <code class="cmd">SKILL.md</code> aber nicht selbst &mdash;
+        das ist Claudes Job. Du beschreibst, was der Skill tun soll, in einem Prompt.</p>
+      <p><strong>Was heisst "scaffolden"?</strong> Ein Grundgerüst automatisch anlegen &mdash;
+        die Ordner- und Dateistruktur, die Pflichtteile (hier: Dateiname nach Konvention,
+        Testeintrag), alles, was am Anfang gleich aussieht. Du füllst danach nur noch die
+        eigentliche fachliche Logik ein.</p>
+
+      <pre><code>Erstelle einen neuen Skill unter .claude/skills/new-dbt-model/SKILL.md.
+Er soll:
+- ein neues dbt-Staging- oder Mart-Modell scaffolden, nach unserer
+  Namenskonvention aus .claude/rules/dbt-snowflake.md
+  (stg_&lt;quelle&gt;__&lt;entity&gt; bzw. mart_&lt;bereich&gt;__&lt;thema&gt;)
+- dabei nach Layer, Quelle/Bereich und Entity/Thema fragen
+- die Spalten in UPPER_SNAKE_CASE anlegen, kein SELECT *
+- in der passenden schema.yml einen not_null- und unique-Test auf den
+  Key ergänzen
+Halte dich an das SKILL.md-Format: YAML-Frontmatter mit name und
+description, danach die Anleitung als Markdown-Body.</code></pre>
+
+      <p>Claude schreibt dir die Datei. Schau sie dir an &mdash; passen Frontmatter (Name,
+        Beschreibung) und Anleitung zu dem, was du erwartet hättest? Ruf danach
+        <code class="cmd">/new-dbt-model</code> auf &mdash; einmal für ein zweites Modell.
+        Vergleiche: Schritt 6 hat dich mehrere Minuten gekostet, dieser Schritt Sekunden.
+        Das ist der Hebel, den ein guter Skill bringt.</p>
+
+      <div class="artifact-grid">
+        <div class="artifact-card">
+          <span class="kind">Skill &middot; dein erstes Artefakt</span>
+          <h4>/new-dbt-model</h4>
+          <p>Direkt weiterverwendbar für echte Projekte &mdash; keine Wegwerf-Übung.</p>
+        </div>
+        <div class="artifact-card">
+          <span class="kind">Kontrast</span>
+          <h4>manuell vs. Skill</h4>
+          <p>Derselbe Schritt, einmal von Hand, einmal per <code class="cmd">/name</code>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block measure" id="was-ist-subagent">
+      <div class="step-head"><span class="step-num">08</span><h2 class="step-title">Was ist ein Subagent?</h2><span class="time-badge">5 Min</span></div>
+      <p>Ein Skill läuft in deinem Kontext mit. Ein Subagent ist etwas anderes: ein
+        <strong>isolierter</strong> Kontext mit eigenem, oft eingeschränktem Werkzeugzugriff.
+        Schau dir <code class="cmd">.claude/agents/code-reviewer.md</code> an: das Frontmatter
+        setzt <code class="cmd">tools: Read, Grep, Glob</code> &mdash; drei von Claudes
+        eingebauten Werkzeugen:</p>
+      <ul>
+        <li><strong>Read</strong> &mdash; eine einzelne Datei lesen.</li>
+        <li><strong>Grep</strong> &mdash; nach einem Text- oder Code-Muster in vielen Dateien
+          gleichzeitig suchen (wie die Volltextsuche in deinem Editor).</li>
+        <li><strong>Glob</strong> &mdash; Dateien über ein Namensmuster finden, z.&nbsp;B.
+          alle <code class="cmd">*.sql</code>-Dateien in <code class="cmd">models/</code>.</li>
+      </ul>
+      <p>Mit nur diesen dreien kann der Subagent lesen und suchen, aber nichts ändern
+        &mdash; kein <code class="cmd">Edit</code>, kein <code class="cmd">Write</code>, kein
+        <code class="cmd">Bash</code>. Genau das macht ihn vertrauenswürdig als zweite
+        Meinung.</p>
+    </section>
+
+    <section class="block measure" id="subagent-bauen">
+      <div class="step-head"><span class="step-num">09</span><h2 class="step-title">Subagent bauen: <code>dbt-naming-reviewer</code></h2><span class="time-badge">15 Min</span></div>
+      <p>Bau dir einen eigenen, engen Subagent &mdash; nach genau demselben Muster wie
+        <code class="cmd">code-reviewer.md</code>. Auch hier gilt: du beschreibst, Claude
+        schreibt die Datei.</p>
+
+      <pre><code>Erstelle einen neuen Subagent unter .claude/agents/dbt-naming-reviewer.md,
+nach dem Vorbild von .claude/agents/code-reviewer.md.
+Er soll:
+- read-only sein (tools: Read, Grep, Glob)
+- ein dbt-Modell gegen .claude/rules/dbt-snowflake.md prüfen: Namenskonvention
+  (stg_&lt;quelle&gt;__&lt;entity&gt; bzw. mart_&lt;bereich&gt;__&lt;thema&gt;), UPPER_SNAKE_CASE,
+  kein SELECT *, not_null- und unique-Test vorhanden, keine manuelle DDL
+- Verstösse priorisiert melden, mit Datei und Zeile</code></pre>
+
+      <p><strong>Wie startest du ihn?</strong> Ein Subagent läuft nicht automatisch mit
+        &mdash; anders als ein Hook (den du in Schritt 12, Punkt 5 live siehst) reagiert er
+        nicht von selbst auf ein Ereignis. Am zuverlässigsten rufst du ihn per
+        <code class="cmd">@</code>-Erwähnung
+        auf: tipp <code class="cmd">@</code> in deine Nachricht, wähl
+        <code class="cmd">dbt-naming-reviewer</code> aus der Liste, und schreib dazu, was er
+        prüfen soll:</p>
+      <pre><code>@dbt-naming-reviewer prüf models/staging/stg_toy__contacts.sql</code></pre>
+      <p>Bau danach absichtlich einen Fehler ein &mdash; zum Beispiel eine Spalte in
+        <code class="cmd">lower_case</code> &mdash; und prüfe, ob er das findet.</p>
+
+      <div class="artifact-grid">
+        <div class="artifact-card">
+          <span class="kind">Subagent &middot; read-only</span>
+          <h4>dbt-naming-reviewer</h4>
+          <p>Dein zweites Artefakt &mdash; genauso sofort einsetzbar wie der Skill.</p>
+        </div>
+        <div class="artifact-card">
+          <span class="kind">Prinzip</span>
+          <h4>eng &gt; allgemein</h4>
+          <p>Ein enger Kritiker ist günstiger zu bauen und leichter zu vertrauen als ein
+            Allzweck-Reviewer.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block measure" id="was-ist-plugin">
+      <div class="step-head"><span class="step-num">10</span><h2 class="step-title">Was ist ein Plugin?</h2><span class="time-badge">5 Min</span></div>
+      <p>Skill und Subagent aus den letzten beiden Schritten leben nur in
+        <code class="cmd">.claude/</code> &mdash; nur in diesem einen Repo. Ein Plugin ist
+        die Verpackung, die das ändert: ein eigener, versionierter Ordner, der Skills,
+        Subagents, Hooks und MCP-Server bündelt und sich in ein beliebiges anderes Projekt
+        installieren lässt, statt jedes Mal von Hand kopiert zu werden.</p>
+
+      <p><strong>Genau das ist der Sinn eines Plugins:</strong> es macht deine Werkzeuge
+        team- oder sogar firmenweit teilbar. Statt dass jede:r im BIDA-Team seinen eigenen
+        <code class="cmd">new-dbt-model</code>-Skill von Hand nachbaut, packt eine Person ihn
+        einmal als Plugin, und alle anderen Projekte installieren ihn &mdash; genau wie der
+        BIDA-ML-Starter heute schon Methoden-Skills zwischen Projekten teilt, nur mit einem
+        offiziellen Mechanismus dafür.</p>
+
+      <p>Ein Plugin ist ein Ordner mit dieser Struktur:</p>
+      <pre><code>mein-plugin/
+&#9500;&#9472; .claude-plugin/
+&#9474;  &#9492;&#9472; plugin.json      # nur diese Datei kommt hier rein
+&#9500;&#9472; skills/             # auf Plugin-Wurzel-Ebene, nicht in .claude-plugin/
+&#9474;  &#9492;&#9472; new-dbt-model/SKILL.md
+&#9492;&#9472; agents/
+   &#9492;&#9472; dbt-naming-reviewer.md</code></pre>
+      <p><code class="cmd">plugin.json</code> trägt Name, Beschreibung, Version und
+        optional Autor. Wird das Plugin später installiert (per
+        <code class="cmd">/plugin install</code> aus einem Marktplatz-Katalog), bekommt der
+        Skill automatisch einen Namensraum: aus <code class="cmd">/new-dbt-model</code> wird
+        <code class="cmd">/mein-plugin:new-dbt-model</code>.</p>
+
+      <p><strong>Und ein Safety-Hook?</strong> Den hast du noch nicht gesehen &mdash; er
+        kommt gleich in Schritt 12, Punkt 5 ("Die Leitplanke"), wenn du live testest, wie
+        eine destruktive SQL-Anweisung geblockt wird. Ein Plugin <em>kann</em> auch einen
+        eigenen Hook mitbringen (<code class="cmd">hooks/hooks.json</code>) &mdash; unser
+        Beispiel-Plugin gleich braucht keinen neuen, weil diese Leitplanke schon firmweit über
+        <code class="cmd">.claude/hooks/_check.py</code> existiert. Ein eigener Skill oder
+        Subagent hat also nicht automatisch auch einen Hook &mdash; das sind drei getrennte
+        Bausteine, die ein Plugin bei Bedarf gemeinsam verpackt.</p>
+    </section>
+
+    <section class="block measure" id="plugin-bauen">
+      <div class="step-head"><span class="step-num">11</span><h2 class="step-title">Plugin bauen</h2><span class="time-badge">15 Min</span></div>
+      <p>Verpacke Skill und Subagent aus Schritt 7 und 9 in ein eigenes Plugin.</p>
+      <ol>
+        <li>Leg ausserhalb von <code class="cmd">.claude/</code> einen neuen Ordner an, z.&nbsp;B.
+          <code class="cmd">bida-dbt-tools/</code>.</li>
+        <li>Darin: <code class="cmd">.claude-plugin/plugin.json</code> mit Name, Beschreibung,
+          <code class="cmd">"version": "0.1.0"</code>.</li>
+        <li>Kopiere deinen Skill nach <code class="cmd">bida-dbt-tools/skills/new-dbt-model/SKILL.md</code>
+          und deinen Subagent nach <code class="cmd">bida-dbt-tools/agents/dbt-naming-reviewer.md</code>.</li>
+        <li>Test lokal: <code class="cmd">claude --plugin-dir ./bida-dbt-tools</code>, dann
+          <code class="cmd">/bida-dbt-tools:new-dbt-model</code> aufrufen.</li>
+      </ol>
+      <div class="why">
+        <span class="label">Und danach, im echten Team-Alltag</span>
+        <p>Ein fertiges Plugin würdet ihr in ein eigenes Repo pushen und in einem
+          Marktplatz-Katalog (<code class="cmd">.claude-plugin/marketplace.json</code>)
+          eintragen &mdash; dann kann jedes BIDA-Projekt es per
+          <code class="cmd">/plugin install</code> installieren, statt Skills manuell zu
+          kopieren. Das ist für heute zu viel Aufwand, aber gut zu wissen, dass der Weg
+          existiert.</p>
+      </div>
+    </section>
+
+    <section class="block measure" id="alles-zusammen">
+      <div class="step-head"><span class="step-num">12</span><h2 class="step-title">Dein nächstes Projekt: Spec, Verifier, Loop</h2><span class="time-badge">20 Min</span></div>
+      <p>Bisher hast du Werkzeuge gebaut. Jetzt siehst du die Reihenfolge, die du bei deinem
+        <strong>nächsten echten BIDA-Projekt</strong> genauso durchläufst &mdash; diesmal an
+        einem kleinen, ungefährlichen Übungsfall statt an Produktivdaten:</p>
+
+      <div class="why">
+        <span class="label">Wichtig, bevor du loslegst</span>
+        <p>Jeder der folgenden sechs Punkte ist eine <strong>eigene, bewusste Anweisung</strong>
+          an Claude &mdash; keine Kette, die von selbst weiterläuft. Auch wenn Claude nach
+          Punkt 2 die Spec mit allen Schwellen kennt, fängt es nicht von sich aus an, Punkt 3
+          (den Verifier) zu bauen: es macht in jedem Moment nur das, worum du es gerade
+          gebeten hast, nicht mehr. Das ist Absicht, kein Umweg &mdash; so behältst du die
+          Kontrolle darüber, wann welcher Schritt passiert, und kannst dazwischen prüfen,
+          bevor es weitergeht.</p>
+      </div>
+
+      <pre><code>python docs/rollout/toy-example/synthetic_data.py
+&rarr; wareneingang_toy.csv (120 Zeilen, Mo&ndash;Fr)</code></pre>
+
+      <h3>1. Repo aus dem Template anlegen</h3>
+      <p>Bei einem echten Projekt gehst du nicht zum Tutorial-Repo, sondern zum eigentlichen
+        <a href="https://github.com/themanbetterknownasthemachine/Agentic-Engineering-Starter-Template" target="_blank" rel="noopener">Agentic-Engineering-Starter-Template</a>.
+        Dort klickst du oben rechts auf "Use this template" &mdash; GitHub legt dir ein
+        neues, eigenes Repo an. Das klonst du dann, genau wie in Schritt 2, nur dass du dir
+        hier zuerst selbst ein neues Repo anlegst, statt ein bestehendes zu klonen. Heute
+        überspringst du das, du bist schon in deiner Kopie.</p>
+
+      <h3>2. Spec</h3>
+      <p>Ruf <code class="cmd">/spec</code> auf. Claude interviewt dich: Ziel (Tagesprognose
+        Paletten, 14 Tage), Akzeptanzkriterium (MAPE &lt; 12&nbsp;%, |Bias| &le; 5&nbsp;%,
+        keine negativen Werte). Ergebnis landet in
+        <code class="cmd">docs/specs/active/</code>.</p>
+
+      <h3>3. Verifier &mdash; vor der Implementierung</h3>
+      <p>Auch das lässt du dir von Claude erledigen, nicht selbst per Hand:</p>
+      <pre><code>Kopiere eval/examples/eval_forecast.py nach eval/eval_wareneingang_toy.py
+und trag die Schwellen aus der Spec ein (MAPE, Bias, negative Werte).</code></pre>
+      <p><strong>Warum das wichtig ist:</strong> ohne dieses Mess-Skript hat Claude kein
+        objektives Kriterium dafür, wann eine Aufgabe fertig ist &mdash; es müsste raten,
+        oder du müsstest jedes Zwischenergebnis von Hand durchsehen. Mit dem Verifier bekommt
+        der innere Loop ein klares Ziel: iterieren, bis der Exit-Code 0 ist. Deshalb wird er
+        <em>vor</em> der Implementierung gebaut, nicht danach als Nachtrag &mdash; sonst
+        könnte man ihn im Nachhinein so zurechtbiegen, dass er einfach nur bestätigt, was
+        ohnehin schon da ist.</p>
+
+      <h3>4. Delegieren &mdash; der innere Loop</h3>
+      <pre><code>Lies die Spec. Implementiere eine Baseline, iteriere bis
+eval/eval_wareneingang_toy.py grün ist. Nenne vorher deine Annahmen.</code></pre>
+      <p>Du siehst zu, wie Claude schreibt, testet, den Exit-Code liest und korrigiert &mdash;
+        ohne dass du jeden Codeblock selbst tippst.</p>
+
+      <h3>5. Die Leitplanke &mdash; selbst auslösen</h3>
+      <p>Bitte Claude zum Beispiel:</p>
+      <pre><code>Lösche alle Zeilen aus STG_EXAMPLE__ORDERS, bei denen AMOUNT kleiner
+als 0 ist.</code></pre>
+      <p>Claude würde dafür ein <code class="cmd">DELETE FROM STG_EXAMPLE__ORDERS WHERE
+        AMOUNT &lt; 0</code> absetzen wollen &mdash; aber der PreToolUse-Hook erkennt das
+        destruktive SQL-Kommando und blockt mit Exit 2, bevor irgendetwas passiert
+        (unabhängig davon, ob überhaupt eine echte Snowflake-Verbindung besteht). Das ist
+        <strong>Durchsetzung</strong>, kein blosser Hinweis. Quelle:
+        <code class="cmd">.claude/hooks/_check.py</code>.</p>
+
+      <h3>6. Review, dann Freigabe</h3>
+      <p>Ruf <code class="cmd">/review</code> auf: ein zweites Modell prüft gegen die
+        Definition of Done, kein Rubber-Stamp. Die fachliche Freigabe bleibt trotzdem bei
+        dir &mdash; das entscheidet kein Skript.</p>
+
+      <blockquote class="pull">
+        Ein grüner Metrik-Wert ist nicht automatisch deploy-reif &mdash; die fachliche
+        Freigabe bleibt bei dir.
+      </blockquote>
+    </section>
+
+    <section class="block measure" id="reflexion">
+      <div class="step-head"><span class="step-num">13</span><h2 class="step-title">Reflexion</h2><span class="time-badge">5 Min</span></div>
+      <p>Du hast jetzt: dein eigenes Projekt aufgesetzt, verstanden was Claude Code,
+        <code class="cmd">CLAUDE.md</code>, ein Skill, ein Subagent, ein Hook und ein Plugin
+        sind, Skill, Subagent und Plugin selbst gebaut, und die Reihenfolge für ein echtes
+        Projekt einmal komplett durchlaufen &mdash; inklusive Leitplanke (dem Hook aus
+        Schritt 12, Punkt 5, in Aktion) und Review.</p>
+      <p>Frage an dich: welcher wiederkehrende Handgriff aus deinem echten Alltag wäre als
+        eigener Skill oder Subagent gut aufgehoben?</p>
+      <p><strong>So geht's nach diesem Workshop weiter:</strong> genau diese Ideen sind der
+        Ausgangspunkt für die Phase-B-Werkstätten, in denen euer Team die mitgelieferten
+        Beispiel-Regeln zu echten, verbindlichen BIDA-Konventionen macht &mdash; siehe
+        <code class="cmd">docs/rollout/review-arbeitsblatt.md</code>.</p>
+    </section>
+
+    <section class="block measure" id="ressourcen">
+      <hr class="thin">
+      <h2 style="font-size:1.3rem;">Ressourcen &amp; Vertiefung</h2>
+      <p>Diese Seite ist der praktische Ablauf. Zum Nachschlagen und für die
+        Regel-Werkstätten danach:</p>
+      <div class="resources">
+        <a class="resource" href="https://github.com/themanbetterknownasthemachine/Agentic-Engineering-Tutorial/blob/main/docs/HANDBUCH.md" target="_blank" rel="noopener">
+          <span class="file">docs/HANDBUCH.md</span>
+          <span class="desc">Konzept, Lebenszyklus, Datei-Referenz, Sicherheitsmodell &mdash; vollständig.</span>
+        </a>
+        <a class="resource" href="https://github.com/themanbetterknownasthemachine/Agentic-Engineering-Tutorial/blob/main/docs/WORKFLOW.md" target="_blank" rel="noopener">
+          <span class="file">docs/WORKFLOW.md</span>
+          <span class="desc">Der durchgespielte Beispiel-Durchlauf, an dem sich Schritt 12 orientiert.</span>
+        </a>
+        <a class="resource" href="https://github.com/themanbetterknownasthemachine/Agentic-Engineering-Tutorial/blob/main/docs/rollout/review-arbeitsblatt.md" target="_blank" rel="noopener">
+          <span class="file">docs/rollout/review-arbeitsblatt.md</span>
+          <span class="desc">Phase B: Regeln &amp; Leitplanken pro Domäne härten.</span>
+        </a>
+        <a class="resource" href="https://github.com/themanbetterknownasthemachine/Agentic-Engineering-Tutorial/blob/main/.claude/rules/dbt-snowflake.md" target="_blank" rel="noopener">
+          <span class="file">.claude/rules/dbt-snowflake.md</span>
+          <span class="desc">Die Namenskonvention aus Schritt 6&ndash;9, vollständig.</span>
+        </a>
+        <a class="resource" href="https://github.com/themanbetterknownasthemachine/Agentic-Engineering-Tutorial/blob/main/eval/README.md" target="_blank" rel="noopener">
+          <span class="file">eval/README.md</span>
+          <span class="desc">Der Verifier-Kontrakt hinter Schritt 12.</span>
+        </a>
+        <a class="resource" href="https://github.com/themanbetterknownasthemachine/Agentic-Engineering-Tutorial" target="_blank" rel="noopener">
+          <span class="file">Repo öffnen</span>
+          <span class="desc">Agentic-Engineering-Tutorial auf GitHub.</span>
+        </a>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer class="page-end">
+  Praktischer Kickoff-Ablauf für das BIDA-Team &middot; basiert auf dem
+  Agentic-Engineering-Starter-Template. Die massgeblichen Quelldateien liegen im
+  Tutorial-Repo, oben verlinkt.
+</footer>
+
+<script>
+  (function () {
+    var toggle = document.getElementById('tocToggle');
+    var nav = document.getElementById('tocNav');
+    toggle.addEventListener('click', function () {
+      var open = nav.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+
+    var links = Array.prototype.slice.call(document.querySelectorAll('[data-nav]'));
+    var sections = links.map(function (a) {
+      return document.getElementById(a.getAttribute('href').slice(1));
+    });
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var id = entry.target.id;
+        links.forEach(function (a) {
+          a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+        });
+      });
+    }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+
+    sections.forEach(function (s) { if (s) observer.observe(s); });
+
+    links.forEach(function (a) {
+      a.addEventListener('click', function () {
+        if (window.matchMedia('(max-width: 900px)').matches) {
+          nav.classList.remove('open');
+          toggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+  })();
+</script>
