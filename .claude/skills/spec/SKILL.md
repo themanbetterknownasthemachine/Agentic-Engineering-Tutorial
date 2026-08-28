@@ -15,3 +15,6 @@ Steps:
 3. Be precise: write a short spec to `docs/specs/active/<topic>.md` with
    target(s), features, holdout window, acceptance criterion (e.g. MAPE threshold),
    and the name of the output view. Mark open decisions I still need to make.
+4. For multi-step work, state per step: one job, which inputs, which structured output,
+   which defined failure state. Same contract idea as `docs/contracts/`, applied to
+   process steps instead of tables.

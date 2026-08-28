@@ -67,6 +67,8 @@ Spec and verifier first, code second. Do not start coding without both.
   For DWH work, `dbtf test` is the verifier.
 - Schema changes go through a dbt model change, never ad-hoc DDL.
 - Never delete failing tests to make the suite pass.
+- Deterministic steps (filtering, dedupe, joins, normalization) belong in code,
+  never in an agent or LLM call. Use a model only where judgment is required.
 - Do not push or merge unless explicitly requested.
 
 ## Definition of done
